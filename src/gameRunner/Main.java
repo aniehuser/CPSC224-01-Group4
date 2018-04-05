@@ -1,4 +1,4 @@
-package hw6;
+package gameRunner;
 
 import java.util.Scanner;
 //import hw5.Hand;

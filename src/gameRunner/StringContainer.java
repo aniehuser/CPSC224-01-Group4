@@ -1,4 +1,4 @@
-package hw6;
+package gameRunner;
 
 /**
  * Container class to pass Strings by reference.

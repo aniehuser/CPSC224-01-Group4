@@ -1,4 +1,4 @@
-package hw6;
+package gameRunner;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package hw6;
+package gameRunner;
 
 import java.util.Arrays;
 import java.util.Hashtable;
