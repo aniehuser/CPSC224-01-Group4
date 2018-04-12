@@ -46,12 +46,12 @@ public class TitleScreen extends Application {
         root.getStylesheets().add("title.css");
 
         //add a Scene to stage
-        primaryStage.setScene(new Scene(root, 1920, 1200, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 2000, 2000, Color.BLACK));
 
         //create buttons
-        createButtons(root);
+        createButtons(root, primaryStage);
         //add background
-        BackgroundImage backgroundImage= new BackgroundImage(new Image("background_image.jpg",1920,1200,false,true),
+        BackgroundImage backgroundImage= new BackgroundImage(new Image("background_image.jpg",2000,2000,true,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
@@ -73,7 +73,7 @@ public class TitleScreen extends Application {
      * @param //stackpane root container for main layout
      * @return none
      */
-    private void createButtons(StackPane root){
+    private void createButtons(StackPane root, Stage primaryStage){
         //Create button 1 for launching the game
         Button button1 = new Button();
         //set button style from title.css and add text to button
@@ -81,7 +81,6 @@ public class TitleScreen extends Application {
         button1.setText("Play Game");
         //add listener to button this opens the game window
         button1.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hi");
@@ -98,7 +97,7 @@ public class TitleScreen extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Tony");
+                InstructionScreen.start(primaryStage);
             }
         });
 
