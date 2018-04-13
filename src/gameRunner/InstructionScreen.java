@@ -10,8 +10,17 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class InstructionScreen {
+    /**
+     * start a screen reflecting our instructions screen
+     * @param //Stage primaryStage
+     * @return none
+     */
     public static void start(Stage primaryStage){
+        // return to title screen button
+        //add a blue style to it with the title screen text
         Button button1 = new Button();
+        button1.getStyleClass().add("rich-blue");
+        button1.setText("Title Screen");
         //set window title
         primaryStage.setTitle("Game Of Yahtzee");
 
@@ -19,14 +28,11 @@ public class InstructionScreen {
         StackPane root = new StackPane();
         root.getStylesheets().add("title.css");
 
-        //set button style from title.css and add text to button
-        button1.getStyleClass().add("rich-blue");
-        button1.setText("Title Screen");
         //add listener to button this runs the instructions screen
-        primaryStage.setScene(new Scene(root, 1920, 1200,Color.BLACK));
+        primaryStage.setScene(new Scene(root, 2000, 2000, Color.BLACK));
 
         //add background
-        BackgroundImage backgroundImage= new BackgroundImage(new Image("instructions.png",1080,1920,true,true),
+        BackgroundImage backgroundImage= new BackgroundImage(new Image("instructions.png",2000,2000,true,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
@@ -37,7 +43,6 @@ public class InstructionScreen {
 
         primaryStage.show();
         button1.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
                 TitleScreen titleScreen = new TitleScreen();

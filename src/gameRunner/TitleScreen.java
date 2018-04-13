@@ -83,7 +83,8 @@ public class TitleScreen extends Application {
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hi");
+                PlayersScreen playersScreen = new PlayersScreen();
+                playersScreen.start(primaryStage);
             }
         });
 
