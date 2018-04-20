@@ -23,6 +23,7 @@ public class InputHandler {
 	 * Test if input to keep particular dice in a roll is correct.
 	 * @param value StringContainer to assign input to
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean dieToKeep(StringContainer value){
 		prompt = "Input y/n to keep or reroll a die";
@@ -34,6 +35,7 @@ public class InputHandler {
 	 * Test if input to play again is correct.
 	 * @param value StringContainer to assign input to
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean playAgain(StringContainer value){
 		prompt = "Input y/n to keep playing or quit"; 
@@ -45,6 +47,7 @@ public class InputHandler {
 	 * Test if input for updating config file is correct.
 	 * @param value  StringContainer to assign input to 
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean updateConfig(StringContainer value){
 		prompt = "enter 'y' if you would like to change the configuration: ";
@@ -56,6 +59,7 @@ public class InputHandler {
 	 * Test if input for updating sides is correct
 	 * @param value  StringContainer to assign input to 
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean newSides(StringContainer value){
 		prompt = "enter the number of sides on each die; ";
@@ -78,6 +82,7 @@ public class InputHandler {
 	 * Test if input for updating die is correct
 	 * @param value  StringContainer to assign input to 
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean newDie(StringContainer value){
 		prompt = "enter the number of die in play: ";
@@ -101,6 +106,7 @@ public class InputHandler {
 	 * Test if input for updating rolls is correct
 	 * @param value  StringContainer to assign input to 
 	 * @return true if valid, false if not
+	 * @deprecated
 	 */
 	public static boolean newRolls(StringContainer value){
 		prompt = "enter the number of rolls per hand: ";
@@ -127,8 +133,8 @@ public class InputHandler {
 	 * @return true if valid, false if not
 	 */
 	public static boolean scoreToKeep(StringContainer value, Hashtable<String,Integer> scores){
-		System.out.println("Type Score you wish to keep: ");
-		value.setString(Main.in.nextLine());
+//		System.out.println("Type Score you wish to keep: ");
+//		value.setString(Main.in.nextLine());
 		for(String k : scores.keySet()){
 			if(k.equals(value.getString()) && scores.get(k) < 0){
 				return true;

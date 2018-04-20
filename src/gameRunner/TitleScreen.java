@@ -51,8 +51,10 @@ public class TitleScreen extends Application {
         //create buttons
         createButtons(root, primaryStage);
         //add background
+
         BackgroundImage backgroundImage= new BackgroundImage(new Image("background_image.jpg",2000,2000,true,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
         root.setBackground(background);

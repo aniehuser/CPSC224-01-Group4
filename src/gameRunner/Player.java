@@ -2,17 +2,27 @@ package gameRunner;
 
 import java.util.Hashtable;
 
+/**
+ * 
+ * @author Anthony Niehuser
+ * @version 2.0
+ */
 public class Player {
 	// non-int score card keys
 	private final String[] lowerScoreTypes = {"Upper Total", "3 of a Kind","4 of a Kind","Full House",
-			"Small Straight","Large Straight","Yahtzee","Chance", "Lower Total", "Grand Total"};
-	private Hashtable<String,Integer> scores; // store all value of score card. -1 means unnassigned
+			"The North","The South","Easteros","The Dead","The Crown","The Others","Dragons","Yahtzee", "Lower Total", "Grand Total"};
+	private Hashtable<String,Integer> scorecard; // store all value of score card. -1 means unnassigned
+	private Hand hand;
+	private Score scorer;
+	
+	
+	private final int sides; // sides of dice
+	private final int die; // number of die
+	private int rolls; // current number of rolls
+	private final int maxRolls; // max number of rolls
 	private int rounds; // current number of rounds
-	private int sides; // sides of dice
-	private int die; // number of die
-	private int rolls; // number of rolls
-	private int maxRounds; // max rounds in a game
-	private static int player = 0; //static variable, increments with each new player
+	private final int maxRounds; // max rounds in a game
+	private int player = 0; //static variable, increments with each new player
 	
 	/**
 	 * Constructor
@@ -20,17 +30,21 @@ public class Player {
 	 * @param die number of die
 	 * @param rolls rolls per round
 	 */
-	public Player(int sides, int die, int rolls){
-		player++;
-		rounds = 0;
+	public Player(int sides, int die, int rolls, int player){
+		this.rounds = 0;
 		this.sides = sides;
 		this.die = die;
-		this. rolls = rolls;
-		scores = initDict(); 
-		maxRounds = scores.size() - 3;
+		this.maxRolls = rolls;
+		this.rolls = 0;
+		this.player = player;
+		this.scorecard = initDict(); 
+		this.hand = new Hand(sides,die,rolls);
+		this.scorer = new Score();
+		this.maxRounds = scorecard.size() - 3;
 	}
 	/**
 	 * Execute a single round for this player object
+	 * @deprecated
 	 */
 	public void doRound(){
 		System.out.println("Player " + player);
@@ -39,7 +53,7 @@ public class Player {
 			return;
 		}
 		
-		// Declare and Initialize varaibles 
+		// Declare and Initialize variables 
 		Hand hand = new Hand(sides,die,rolls);
 		StringContainer inStr = new StringContainer();
 		boolean goodInput = false;
@@ -74,26 +88,110 @@ public class Player {
 		System.out.println(toString());
 		
 		// get input for score to keep
-		goodInput = InputHandler.scoreToKeep(inStr, scores);
+		goodInput = InputHandler.scoreToKeep(inStr, scorecard);
 		while(!goodInput){
 			System.out.println("Invalid key or score has already been assigned, try again");
-			goodInput = InputHandler.scoreToKeep(inStr, scores);
+			goodInput = InputHandler.scoreToKeep(inStr, scorecard);
 		}
 		
 		// set score and recalculate totals 
-		scores.put(inStr.getString(), score.getScore(inStr.getString()));
+		scorecard.put(inStr.getString(), score.getScore(inStr.getString()));
 		calculateTotals();
 		
 		//increment rounds
 		rounds++;
 	}
+	public void rollInit(){
+		if(rolls != 0){
+			System.out.println("Roll Error: Cannot init started round");
+			return;
+		}
+		hand = new Hand(sides, die, maxRolls);
+		hand.shuffleAll();
+		rolls++;
+	}
+	public void rollOnce(boolean[] keep){
+		if(keep.length != die){
+			System.out.println("Roll Error: Bad input length");
+			return;
+		}
+		if(isPlayerTurnsOver()){
+			System.out.println("Roll Error: Too many rounds");
+			return;
+		}
+		if(isRoundOver()){
+			System.out.println("Roll Error: Too many rolls");
+			return;
+		}
+		
+		if(isAllTrue(keep)){
+			System.out.println("Keep all die, end round");
+			rolls = maxRolls-1;
+		} else if(!hand.shuffle(keep)){
+			System.out.print("Roll Error: ");
+			return;
+		}
+		rolls++;
+		if(isRoundOver()){
+			scorer.calculateScore(hand);
+			rounds++;
+		}
+		
+	}
+	public Score getScorer(){
+		if(!isRoundOver()){
+			System.out.println("Score Error: Cannot score until round is over");
+			return null;
+		}
+		return scorer;
+	}
+
+	public Hashtable<String, Integer> getScoreCard(){
+		return scorecard;
+	}
+	public Hand getHand(){
+		return hand;
+	}
+	public Die[] getDie(){
+		return hand.getRolls();
+	}
+	public int getRolls(){
+		return rolls;
+	}
+	public void setScore(String key){
+		if(!isRoundOver()){
+			System.out.println("Score Error: Cannot score until round is over");
+			return;
+		}
+		if(!isScoreSet(key)){
+			System.out.println("Score Error: Score has already been set");
+			return;
+		}
+		scorecard.put(key, scorer.getScore(key));
+		rolls = 0;
+	}
+	public boolean isScoreSet(String key){
+		StringContainer inStr = new StringContainer(key);
+		return InputHandler.scoreToKeep(inStr, scorecard);
+	}
+
+	private boolean isAllTrue(boolean[] array){
+		boolean yes = true;
+		for(int i=0; i<array.length; i++){
+			if(!array[i]){
+				yes = false;
+				break;
+			}
+		}
+		return yes;
+	}
 	/**
 	 * Calculate the upper, lower and grand totals
 	 */
 	private void calculateTotals() {
-		scores.put("Upper Total", sumUpper());
-		scores.put("Lower Total", sumLower());
-		scores.put("Grand Total", scores.get("Upper Total") + scores.get("Lower Total"));
+		scorecard.put("Upper Total", sumUpper());
+		scorecard.put("Lower Total", sumLower());
+		scorecard.put("Grand Total", scorecard.get("Upper Total") + scorecard.get("Lower Total"));
 	}
 	/**
 	 * Calculate total score of upper score card
@@ -103,7 +201,7 @@ public class Player {
 		int sum = 0;
 		for(int i=1; i<=sides; i++){
 			String k = Integer.toString(i);
-			int v = scores.get(k);
+			int v = scorecard.get(k);
 			// check if v assigned
 			if(v >= 0){
 				sum += v; 
@@ -118,7 +216,7 @@ public class Player {
 	private int sumLower() {
 		int sum = 0;
 		for(int i = 1; i<lowerScoreTypes.length-2; i++){
-			int v = scores.get(lowerScoreTypes[i]);
+			int v = scorecard.get(lowerScoreTypes[i]);
 			// check that v has been assigned
 			if(v >= 0){
 				sum += v;
@@ -149,15 +247,23 @@ public class Player {
 	/**
 	 * return string representation of current score card
 	 */
+	public boolean isRoundOver(){
+		return rolls == maxRolls;
+	}
+	
+	public boolean isPlayerTurnsOver(){
+		return rounds == maxRounds;
+	}
+	
 	public String toString(){
 		StringBuffer b = new StringBuffer();
 		b.append("Current Score Card:\n");
 		for(int i=1; i<=sides; i++){
-			int v = scores.get(Integer.toString(i));
+			int v = scorecard.get(Integer.toString(i));
 			b.append("Score " + ((v < 0) ? "nil" : v) + " on the " + i +" line.\n");
 		}
 		for(int i=0; i<lowerScoreTypes.length; i++) {
-			int v = scores.get(lowerScoreTypes[i]);
+			int v = scorecard.get(lowerScoreTypes[i]);
 			b.append("Score " + ((v < 0) ? "nil" : v) + " on the " + lowerScoreTypes[i] + " line.\n");
 		}
 		return b.toString();

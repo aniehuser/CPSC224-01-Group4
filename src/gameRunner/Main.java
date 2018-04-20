@@ -1,5 +1,7 @@
 package gameRunner;
 
+import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 //import hw5.Hand;
 
@@ -23,7 +25,55 @@ public class Main {
 	 * main method, provides insertion point for program
 	 * @param args  terminal input
 	 */
+	public static Random gen = new Random();
+	public static boolean[] genKeep(){
+		boolean[] keep = new boolean[7];
+		for(int i=0; i<7; i++){
+			keep[i] = gen.nextBoolean();
+		}
+		return keep;
+	}
 	public static void main(String[] args) {
+		//Start Game
+		game.start();
+		
+		//if problem starting game, ends program
+		if(!game.isValidInstance()){
+			System.out.println("Invalid Instance of Game object");
+			return;
+		}
+		Player p = new Player(game.getDieSides(),
+							   game.getDieNum(), 
+							   game.getRollsPerRound(), 
+							   1);
+		
+		p.rollInit();
+		System.out.println(p.getHand().toString());
+		if(!p.isRoundOver()){
+			p.rollOnce(genKeep());
+			System.out.println(p.getHand().toString());
+		}
+		if(!p.isRoundOver()){
+			p.rollOnce(genKeep());
+			System.out.println(p.getHand().toString());
+		}
+		// should not execute
+		if(!p.isRoundOver()){
+			p.rollOnce(genKeep());
+			System.out.println(p.getHand().toString());
+		}
+		
+		if(p.isRoundOver()){
+			System.out.println(p.toString());
+			System.out.println(p.getScorer().toString());
+
+			String keepScore = "3 of a Kind";
+			if(p.isScoreSet(keepScore))
+				p.setScore(keepScore);
+			System.out.println(p.toString());
+		}
+		
+		if(true) return;
 		boolean goodInput = false;
 		StringContainer inStr = new StringContainer();
 		Player p1;
@@ -47,7 +97,7 @@ public class Main {
 		}
 		
 		// Create Player
-		p1 = new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound());
+		p1 = new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), 1);
 		
 		// Game loop
 		while(game.getCurrentRound()<game.getMaxRounds()){
