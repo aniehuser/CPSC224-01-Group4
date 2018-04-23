@@ -13,14 +13,19 @@ package gameRunner;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 public class TitleScreen extends Application {
     /**
@@ -45,25 +50,33 @@ public class TitleScreen extends Application {
         StackPane root = new StackPane();
         root.getStylesheets().add("title.css");
 
+
+        //add the background
+        root.setId("pane");
+        //root.setId("pane");
+        //root.getStylesheets().add("title.css");
+
+        //add the game of thrones text
+        ImageView imageView = new ImageView();
+        Image title = new Image(getClass().getClassLoader().getResourceAsStream("res/game_of_yahtzee_gray.png"));
+        StackPane.setAlignment(imageView, Pos.TOP_CENTER);
+        root.setPadding(new Insets(150, 0, 0,0));
+        imageView.setEffect(new DropShadow(100, Color.WHITESMOKE));
+        imageView.setImage(title);
+        root.getChildren().addAll(imageView);
+
+        //win or die imageView
+        ImageView winOrDieImage = new ImageView();
+        Image winOrDie = new Image(getClass().getClassLoader().getResourceAsStream("res/win_or_die_black_red.png"));
+        winOrDieImage.setImage(winOrDie);
+        StackPane.setAlignment(winOrDieImage, Pos.BOTTOM_CENTER);
+        root.getChildren().addAll(winOrDieImage);
+
         //add a Scene to stage
-        primaryStage.setScene(new Scene(root, 2000, 2000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
 
         //create buttons
         createButtons(root, primaryStage);
-        //add background
-        BackgroundImage backgroundImage= new BackgroundImage(new Image("background_image.jpg",2000,2000,true,true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
-        root.setBackground(background);
-
-        //add title text on scene
-        Text text = new Text("Game of Yahtzee");
-        text.setFont(Font.font ("Comic-sans", 64));
-        text.setFill(Color.WHITE);
-        text.setTranslateY(-350);
-
-        root.getChildren().add(text);
 
         //show Stage
         primaryStage.show();
@@ -83,6 +96,10 @@ public class TitleScreen extends Application {
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+
+                //System.out.println("Hi");
+
                 PlayersScreen playersScreen = new PlayersScreen();
                 playersScreen.start(primaryStage);
             }
@@ -95,18 +112,22 @@ public class TitleScreen extends Application {
         button2.setText("Instructions");
         //add listener to button this runs the instructions screen
         button2.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent event) {
-                InstructionScreen.start(primaryStage);
+                InstructionScreen instructionScreen = new InstructionScreen();
+                //try {
+                    instructionScreen.start(primaryStage);
+                //} catch (IOException e) {
+                //    e.printStackTrace();
+                //}
             }
         });
 
         //move butttons so screen looks nice
-        button1.setTranslateX(-500);
-        button1.setTranslateY(200);
-        button2.setTranslateX(500);
-        button2.setTranslateY(200);
+        button1.setTranslateX(-300);
+        button1.setTranslateY(50);
+        button2.setTranslateX(300);
+        button2.setTranslateY(50);
 
         //add new game button and instructions button
         root.getChildren().add(button1);
