@@ -77,7 +77,7 @@ public class TitleScreen extends Application {
 
         //create buttons
         createButtons(root, primaryStage);
-
+        
         //show Stage
         primaryStage.show();
     }

@@ -16,24 +16,34 @@ import java.util.Hashtable;
  */
 public class Score {
 	//constants and dictionary keys
-	private final String[] lowerScoreTypes = {"3 of a Kind","4 of a Kind","Full House",
-										"Small Straight","Large Straight","Yahtzee","Chance"};
-	private final int BONUS = 35;
-	private final int FULL_HOUSE = 25;
-	private final int SM_STRAIGHT = 30;
-	private final int LG_STRAIGHT = 40;
-	private final int YAHTZEE = 50;
-	private final int YAHTZEE_BONUS = 100;
-	
+	private final String[] lowerScoreTypes = {"3 of a Kind","4 of a Kind","Full House","The North",
+						"The South","Easteros","The Dead","The Crown","The Others","Dragons","Yahtzee"};
+	private final int[] BASE_MULTIPLIER = {2,4,6,8,10,12,14};
+	private final int FULL_HOUSE = 50;
+	private final int NORTH = 30;
+	private final int SOUTH = 35;
+	private final int EASTEROS = 40;
+	private final int DEAD = 45;
+	private final int CROWN = 50;
+	private final int OTHERS = 55;
+	private final int DRAGONS = 60;
+	private final int YAHTZEE = 100;
+
+	private int[] specialCount = {0,0,0,0,0,0,0};
 	private Hashtable<String,Integer> scores;//Store possible scores
 	private Hand hand;	//Store hand info
 	
 	/**
 	 * Constructor
 	 * @param hand to determine what scores are available
+	 * @deprecated
 	 */
 	public Score(Hand hand){
-		this.hand = hand.clone();
+		this.hand = hand;
+		scores = initDict();
+	}
+	public Score(){
+		this.hand = null;
 		scores = initDict();
 	}
 	/**
@@ -43,7 +53,7 @@ public class Score {
 	private Hashtable<String,Integer> initDict(){
 		Hashtable<String,Integer> d = new Hashtable<String,Integer>();
 		//initialize upper score card values
-		for(int i=1; i<=hand.getDieSides(); i++){
+		for(int i=1; i<=BASE_MULTIPLIER.length; i++){
 			d.put(Integer.toString(i), 0);
 		}
 		//initialize lower score card
@@ -69,8 +79,19 @@ public class Score {
 	}
 	/**
 	 * Calculate and populate values in scores given rolls in hand
+	 * @deprecated
 	 */
 	public void calculateScore(){
+		//Sort hand and output to terminal
+		sortHand();
+		System.out.print("Here is your sorted hand: ");
+		System.out.println(hand.toString());
+		
+		//Calculate scores
+		calculateLowerScore();
+	}
+	public void calculateScore(Hand hand){
+		this.hand = hand;
 		//Sort hand and output to terminal
 		sortHand();
 		System.out.print("Here is your sorted hand: ");
@@ -90,10 +111,10 @@ public class Score {
 	 * @return integer of sum 
 	 */
 	public int totalAllDice(){
-		int[] rolls = hand.getRolls();
+	Die[] rolls = hand.getRolls();
 		int sum = 0;
 		for(int i=0; i<rolls.length; i++){
-			sum += rolls[i];
+			sum += rolls[i].getValue();
 		}
 		return sum;
 	}
@@ -101,15 +122,19 @@ public class Score {
 	 * Calculate values for the upper score card. 
 	 */
 	public void calculateUpperScore(){
-		int[] rolls = hand.getRolls();
+		Die[] rolls = hand.getRolls();
 		for(int i=1; i<=hand.getDieSides(); i++){
 			int count = 0; // count occurences of roll number
 			for(int j=0; j<rolls.length; j++){
-				if(rolls[j] == i){
+				if(rolls[j].getType() == i){
 					count++;
+					if(rolls[j].isSpecial()){
+						specialCount[i-1]++;
+					}
 				}
 			}
-			scores.put(Integer.toString(i), count * i);
+			int multiply = (specialCount[i-1]==0) ? 1 : specialCount[i-1] * BASE_MULTIPLIER[i];
+			scores.put(Integer.toString(i), count * i * multiply);
 		}
 	}
 	
@@ -124,17 +149,27 @@ public class Score {
 		// Establish roll's attributes
 		int dieTotal = totalAllDice();
 		int maxOfKind = Combo.maxOfAKindFound(hand.getRolls());
-		int maxStraight = Combo.maxStraightFound(hand.getRolls());
 		boolean fullHouse = Combo.fullHouseFound(hand.getRolls());
+		boolean north = Combo.northFound(hand.getRolls());
+		boolean south = Combo.southFound(hand.getRolls());
+		boolean east = Combo.easterosFound(hand.getRolls());
+		boolean dead = Combo.deadFound(hand.getRolls());
+		boolean crown = Combo.crownFound(hand.getRolls());
+		boolean other = Combo.othersFound(hand.getRolls());
+		boolean dragons = Combo.dragonsFound(hand.getRolls());
 		
-		// Assign relevant values to Hashtable
+//		// Assign relevant values to Hashtable
 		if(maxOfKind >= 3) scores.put(lowerScoreTypes[0], dieTotal); // 3 of a kind
 		if(maxOfKind >= 4) scores.put(lowerScoreTypes[1], dieTotal); // 4 of a kind
 		if(fullHouse) scores.put(lowerScoreTypes[2], FULL_HOUSE); // full house
-		if(maxStraight >= 4) scores.put(lowerScoreTypes[3], SM_STRAIGHT); // small straight
-		if(maxStraight >= 5) scores.put(lowerScoreTypes[4], LG_STRAIGHT); // large straight
-		if(maxOfKind >= 5) scores.put(lowerScoreTypes[5], YAHTZEE); // yahtzee
-		scores.put(lowerScoreTypes[6], dieTotal); // chance
+		if(north) scores.put(lowerScoreTypes[3], NORTH);
+		if(south) scores.put(lowerScoreTypes[4], SOUTH);
+		if(east) scores.put(lowerScoreTypes[5], EASTEROS);
+		if(dead) scores.put(lowerScoreTypes[6], DEAD);
+		if(crown) scores.put(lowerScoreTypes[7], CROWN);
+		if(other) scores.put(lowerScoreTypes[8], OTHERS);
+		if(dragons) scores.put(lowerScoreTypes[9], DRAGONS);
+		if(maxOfKind >= 7) scores.put(lowerScoreTypes[10], YAHTZEE); // yahtzee
 	}
 	
 	

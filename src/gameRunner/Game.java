@@ -197,4 +197,8 @@ public class Game {
 		out.append("you get " + rolls + " rolls per hand");
 		return out.toString();
 	}
+
+	public boolean isGameOver(){
+		return rounds < maxRounds;
+	}
 }
