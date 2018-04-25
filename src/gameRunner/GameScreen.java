@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -26,7 +27,6 @@ public class GameScreen {
     private Text playerText;
     private Text hand;
     private TextField keep;
-    HBox hbox;
     GridPane handChoice;
     StackPane root = new StackPane();
 
@@ -108,10 +108,9 @@ public class GameScreen {
             System.out.println(p.getHand().toString());
             Die[] playerHand = p.getDie();
             hand.setText(p.getHand().toString());
-            int j = 0;
-            for (int i = 0; i < p.getHand().getRollNum(); i++) {
-                handChoice.add(new ToggleButton(playerHand[i].toString()), i, j);
-                j++;
+            System.out.println(p.getHand().getRolls().length);
+            for (int i = 0; i < p.getHand().getRolls().length; i++) {
+                handChoice.add(new ToggleButton(playerHand[i].toString()), i, 0, 1, p.getHand().getRolls().length);
             }
 
 
@@ -121,21 +120,13 @@ public class GameScreen {
             //check if the round is over before rolling again.
             // NOTE:: This check occurs automatically inside of rollOnce(). Method just
             // returns without performing any functionality if constraints not met.
-            if(!p.isRoundOver()){
+            while(!p.isRoundOver()){
                 //After rollinit(), will use rollOnce() until the round is over. rollOnce()
                 // checks if the user keeps all cards and automatically sets the round to be
                 // over. genKeep() generates a random boolean array which specifies which die to
                 // keep. True to keep, false to reroll. indices of input directly correspond to indice
                 // of die to keep
-//                p.rollOnce();
-
-                System.out.println(p.getHand().toString());
-            }
-
-            // perform another roll in the same fashion as before
-            if(!p.isRoundOver()){
-//                p.rollOnce();
-                System.out.println(p.getHand().toString());
+                    playerRoll(p);
             }
 
             // if round is over, then do end of round calculations. In actual game, this should be implemented
@@ -143,6 +134,11 @@ public class GameScreen {
             if(p.isRoundOver()){
                 // to print out players current score, call the player objects toString() method
                 System.out.println(p.toString());
+
+                for (Node button: handChoice.getChildren()) {
+                    ToggleButton playerButton = (ToggleButton) button;
+                    playerButton.setDisable(true);
+                }
 
                 // you can get the possible scores by calling getScorer. You can output this data using
                 // the Score objects toString() method
@@ -166,5 +162,21 @@ public class GameScreen {
                 System.out.println(p.toString());
             }
         }
+    }
+    private void playerRoll(Player p){
+        int i = 0;
+        boolean[] choice = new boolean[p.getHand().getRolls().length];
+        for (Node button: handChoice.getChildren()) {
+            ToggleButton playerButton = (ToggleButton) button;
+            if(playerButton.isSelected()){
+                choice[i] = true;
+            }
+            else{
+                choice[i] = false;
+            }
+            i++;
+        }
+        System.out.println(choice.length);
+        p.rollOnce(choice);
     }
 }
