@@ -113,6 +113,13 @@ public class Hand implements Cloneable {
 		}
 		rollNum++;
 	}
+	public Die getDieByIndex(int i){
+		return rolls[i];
+	}
+	public void setDieByIndex(int i, Die d){
+		rolls[i] = d.clone();
+	}
+			
 
 	/**
 	 * Input boolean array to indicate which dice in a hand to shuffle and
