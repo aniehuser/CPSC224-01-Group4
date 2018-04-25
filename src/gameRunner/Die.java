@@ -3,7 +3,7 @@ package gameRunner;
 public class Die implements Cloneable, Comparable<Die>{
 	private int type;
 	private boolean special;
-	
+	//blau
 	public Die() {
 		type = 1;
 		special = false;
