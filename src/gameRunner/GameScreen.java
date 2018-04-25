@@ -32,7 +32,7 @@ public class GameScreen {
 
     public static final Game game = new Game();
 
-    public void start(Stage primaryStage, ArrayList<String> names){
+    public void start(final Stage primaryStage, ArrayList<String> names){
         primaryStage.setTitle("Game Of Yahtzee");
         playerText = new Text(names.get(0) + "'s turn" );
         hand = new Text();
@@ -81,7 +81,7 @@ public class GameScreen {
         int playerNum = 1;
 
         for (String string: names) {
-            players.add(new Player(game.getDieSides(),game.getDieNum(),game.getRollsPerRound(), playerNum, string));
+            players.add(new Player(game.getDieSides(),game.getDieNum(),game.getRollsPerRound(), string));
             playerNum++;
         }
         System.out.println(names);

@@ -2,7 +2,7 @@ package gameRunner;
 
 import java.util.Hashtable;
 import factions.*;
-
+//comment
 /**
  * 
  * @author Anthony Niehuser
@@ -15,7 +15,7 @@ public class Player {
 	private Hashtable<String,Integer> scorecard; // store all value of score card. -1 means unnassigned
 	private Hand hand;
 	private Score scorer;
-	private final IFaction faction;
+//	private final IFaction faction;
 	
 	
 	private final int sides; // sides of dice
@@ -32,7 +32,7 @@ public class Player {
 	 * @param die number of die
 	 * @param rolls rolls per round
 	 */
-	public Player(int sides, int die, int rolls, int player, String name){
+	public Player(int sides, int die, int rolls, String name){
 		this.rounds = 0;
 		this.sides = sides;
 		this.die = die;

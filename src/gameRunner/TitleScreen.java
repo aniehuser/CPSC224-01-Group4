@@ -86,7 +86,7 @@ public class TitleScreen extends Application {
      * @param //stackpane root container for main layout
      * @return none
      */
-    private void createButtons(StackPane root, Stage primaryStage){
+    private void createButtons(StackPane root, final Stage primaryStage){
         //Create button 1 for launching the game
         Button button1 = new Button();
         //set button style from title.css and add text to button
