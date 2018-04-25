@@ -15,7 +15,7 @@ public class Player {
 	private Hashtable<String,Integer> scorecard; // store all value of score card. -1 means unnassigned
 	private Hand hand;
 	private Score scorer;
-	private final IFaction faction;
+	//private final IFaction faction;
 	
 	
 	private final int sides; // sides of dice

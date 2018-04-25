@@ -58,7 +58,7 @@ public class TitleScreen extends Application {
 
         //add the game of thrones text
         ImageView imageView = new ImageView();
-        Image title = new Image(getClass().getClassLoader().getResourceAsStream("res/game_of_yahtzee_gray.png"));
+        Image title = new Image(getClass().getClassLoader().getResourceAsStream("./res/game_of_yahtzee_gray.png"));
         StackPane.setAlignment(imageView, Pos.TOP_CENTER);
         root.setPadding(new Insets(150, 0, 0,0));
         imageView.setEffect(new DropShadow(100, Color.WHITESMOKE));
@@ -77,7 +77,7 @@ public class TitleScreen extends Application {
 
         //create buttons
         createButtons(root, primaryStage);
-        
+
         //show Stage
         primaryStage.show();
     }
