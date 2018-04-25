@@ -81,10 +81,10 @@ public class PlayersScreen {
         primaryStage.show();
 
         //Button Listeners for the number of players buttons
-        btn1.setOnAction(new ButtonHandler(1));
-        btn2.setOnAction(new  ButtonHandler(2));
-        btn3.setOnAction(new ButtonHandler(3));
-        btn4.setOnAction(new ButtonHandler(4));
+        btn1.setOnAction(new ButtonHandler(1, primaryStage));
+        btn2.setOnAction(new  ButtonHandler(2, primaryStage));
+        btn3.setOnAction(new ButtonHandler(3, primaryStage));
+        btn4.setOnAction(new ButtonHandler(4, primaryStage));
     }
 
     /*
@@ -96,10 +96,12 @@ public class PlayersScreen {
 
         private int numOfNames;
         Button enterButton;
+        Stage primaryStage;
 
-        public ButtonHandler(int numOfNames) {
+        public ButtonHandler(int numOfNames, Stage primaryStage) {
             this.numOfNames = numOfNames;
             enterButton = new Button("Enter");
+            this.primaryStage = primaryStage;
         }
 
         @Override
@@ -127,6 +129,20 @@ public class PlayersScreen {
             enterButton.setMaxWidth(150.00);
             enterButton.setMinHeight(50.0);
             enterButton.setEffect(ds);
+
+            enterButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ArrayList<String> names = new ArrayList<>();
+                    for (TextField text: textFields) {
+                        names.add(text.getText());
+                    }
+                    GameScreen gameScreen = new GameScreen();
+                    gameScreen.start(primaryStage,names);
+                }
+            });
+
+
             root.getChildren().add(enterButton);
 
             //TODO: handle input, go to pick faction screen

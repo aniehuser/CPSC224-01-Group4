@@ -23,6 +23,7 @@ public class Player {
 	private int rounds; // current number of rounds
 	private final int maxRounds; // max rounds in a game
 	private int player = 0; //static variable, increments with each new player
+	private String name; //contains a player's name
 	
 	/**
 	 * Constructor
@@ -30,7 +31,7 @@ public class Player {
 	 * @param die number of die
 	 * @param rolls rolls per round
 	 */
-	public Player(int sides, int die, int rolls, int player){
+	public Player(int sides, int die, int rolls, int player, String name){
 		this.rounds = 0;
 		this.sides = sides;
 		this.die = die;
@@ -41,6 +42,7 @@ public class Player {
 		this.hand = new Hand(sides,die,rolls);
 		this.scorer = new Score();
 		this.maxRounds = scorecard.size() - 3;
+		this.name = name;
 	}
 	/**
 	 * Execute a single round for this player object
@@ -254,8 +256,16 @@ public class Player {
 	public boolean isPlayerTurnsOver(){
 		return rounds == maxRounds;
 	}
-	
-	public String toString(){
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String toString(){
 		StringBuffer b = new StringBuffer();
 		b.append("Current Score Card:\n");
 		for(int i=1; i<=sides; i++){
