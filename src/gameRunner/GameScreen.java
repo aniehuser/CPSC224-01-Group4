@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import factions.Faction;
+
 import static javafx.application.Application.STYLESHEET_MODENA;
 
 public class GameScreen {
@@ -81,7 +83,7 @@ public class GameScreen {
         int playerNum = 1;
 
         for (String string: names) {
-            players.add(new Player(game.getDieSides(),game.getDieNum(),game.getRollsPerRound(), string));
+            players.add(new Player(game.getDieSides(),game.getDieNum(),game.getRollsPerRound(), string, Faction.values()[playerNum]));
             playerNum++;
         }
         System.out.println(names);

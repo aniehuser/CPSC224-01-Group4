@@ -3,21 +3,28 @@ package gameRunner;
 public class Die implements Cloneable, Comparable<Die>{
 	private int type;
 	private boolean special;
+	private int value;
 	//blau
 	public Die() {
 		type = 1;
 		special = false;
+		value = 1;
 	}
 	public Die(Die other){
 		type = other.type;
 		special = other.special;
+		value  = other.value;
 	}
 	public Die(int type, boolean special){
 		this.type = type;
 		this.special = special;
+		this.value = type;
 	}
 	public int getValue(){
-		return (type) * (special ?  2 :  1 );
+		return value * (special ?  2 :  1 );
+	}
+	public void setValue(int value){
+		this.value = value;
 	}
 	public void setType(int type, boolean special){
 		this.type = type;

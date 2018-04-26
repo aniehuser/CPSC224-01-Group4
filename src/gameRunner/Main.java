@@ -3,6 +3,7 @@ package gameRunner;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+import factions.*;
 //import hw5.Hand;
 
 /**
@@ -47,7 +48,8 @@ public class Main {
 		Player p = new Player(game.getDieSides(),
 							   game.getDieNum(), 
 							   game.getRollsPerRound(), 
-							   "Carl");
+							   "Carl",
+							   Faction.STARKS);
 		
 		// loop game until total rounds played == maxRounds (18). Do not increment round until
 		// every player has completed their round. I may edit the Game object to make these checks
