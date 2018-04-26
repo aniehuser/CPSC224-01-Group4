@@ -61,7 +61,6 @@ public class Hand implements Cloneable {
 			rolls[i] = other.rolls[i].clone();
 		}
 	}
-
 	/**
 	 * Testing constructor
 	 */
@@ -72,7 +71,13 @@ public class Hand implements Cloneable {
 		this.dieSides = dieSides;
 		this.maxRolls = maxRolls;
 	}
-
+	/**
+	 * CARL DO NOT USE THIS METHOD
+	 */
+	public void incrementMaxRolls(){
+		maxRolls++;
+	}
+	
 	/**
 	 * Getter for number of side on a die.
 	 *
@@ -92,27 +97,14 @@ public class Hand implements Cloneable {
 		return rolls;
 	}
 
-	/**
-	 * ReRoll dice specified by input string.
-	 *
-	 * @param toKeep must be string of length 5 where y's specify keep value
-	 *               and n's specify re-roll value.
-	 * @deprecated
-	 */
-	public void shuffle(String toKeep) {
-		// prevent from rolling more than three times
-		if (rollNum > maxRolls - 1) {
-			System.out.println("Cannot roll more than " + maxRolls + " times!");
-			return;
-		}
-		// loop through input string to keep/reroll valeus
-		toKeep = toKeep.toLowerCase();
-		for (int i = 0; i < rolls.length; i++) {
-			if (toKeep.charAt(i) == 'n')
-				roll(rolls[i]);
-		}
-		rollNum++;
+	
+	public Die getDieByIndex(int i){
+		return rolls[i];
 	}
+	public void setDieByIndex(int i, Die d){
+		rolls[i] = d.clone();
+	}
+			
 
 	/**
 	 * Input boolean array to indicate which dice in a hand to shuffle and

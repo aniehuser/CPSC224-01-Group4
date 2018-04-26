@@ -22,9 +22,9 @@ public class InstructionScreen {
      * @param //Stage primaryStage
      * @return none
      */
-    public void start(Stage primaryStage)  {
+    public void start(final Stage primaryStage)  {
 
-        String instructions = "How To Win:\n" + "Players pick a faction to " +
+        final String instructions = "How To Win:\n" + "Players pick a faction to " +
                 "belong to and fight the others by rolling the dice to become the ruling faction\n" +
                  "\n" +"Rules:\n" +
                 "Each faction has a special rule, pick your faction wisely!\n" +
@@ -40,7 +40,7 @@ public class InstructionScreen {
                 "White Walker        -- The Night King  -- .75%\n" +
                 "Dragon              -- Drogon          -- .5%";
 
-        String scoring = "Scoring:\nEach turn you get pick one score to fill out on scorecard.\n" +
+        final String scoring = "Scoring:\nEach turn you get pick one score to fill out on scorecard.\n" +
                 "\nUpper Scoring:\n" + "Each dice representation has a chance of getting a rare of that dice.\n" +
                 "When a rare is rolled an increasing multiplier is earned. The chance to get a rare is random\n" +
                 "and can create havoc throughout the game. The score multiplier is increasing with a base\n "+
@@ -85,7 +85,7 @@ public class InstructionScreen {
         ds.setColor(Color.color(1.0f, 1.0f, 1.0f));
 
         //Set the text which is the instructions
-        Text text = (Text) scene.lookup("#text");
+        final Text text = (Text) scene.lookup("#text");
         text.setText(instructions);
         text.setEffect(ds);
         text.setFont(Font.font ("Verdana", 20));
@@ -95,7 +95,7 @@ public class InstructionScreen {
         primaryStage.show();
 
         //Next-Back button changes the text from instructions to scoring
-        Button nextButton = (Button) scene.lookup("#nextButton");
+        final Button nextButton = (Button) scene.lookup("#nextButton");
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
