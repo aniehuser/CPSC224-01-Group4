@@ -150,10 +150,12 @@ public class Player {
 			return;
 		}
 		if(!isScoreSet(key)){
+			scorecard.put(key, bonusPoints + scorecard.get(key) + scorer.getScore(key));
 			System.out.println("Score Error: Score has already been set");
-			return;
+		} else{
+			scorecard.put(key, bonusPoints + scorer.getScore(key));
 		}
-		scorecard.put(key, bonusPoints + scorer.getScore(key));
+		
 		faction.resetFaction();
 		rolls = 0;
 	}
@@ -231,6 +233,10 @@ public class Player {
 		d.put("Grand Total", 0);
 		return d;
 	}
+	/**
+	 * DO NOT USE
+	 * @param a
+	 */
 	public void setBonusPoints(int a){
 		bonusPoints = a;
 	}

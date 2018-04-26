@@ -13,6 +13,7 @@ public abstract class BaseFaction {
 	}
 	
 	public abstract boolean isSpecialHand();
+	
 	public void executeSpecial(){
 		if(executed){
 			return;
@@ -26,5 +27,9 @@ public abstract class BaseFaction {
 	
 	public String specialInstructions(){
 		return message;
+	}
+	
+	public boolean isExecuted(){
+		return executed;
 	}
 }
