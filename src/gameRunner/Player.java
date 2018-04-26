@@ -17,7 +17,7 @@ public class Player {
 	private Hand hand;
 	private Score scorer;
 	private final BaseFaction faction;
-	
+
 	
 	private final int sides; // sides of dice
 	private final int die; // number of die
