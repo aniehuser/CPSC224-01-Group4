@@ -31,14 +31,13 @@ public class Player {
 	 * @param die number of die
 	 * @param rolls rolls per round
 	 */
-	public Player(int sides, int die, int rolls, int player, String name){
+	public Player(int sides, int die, int rolls, String name){
 		this.rounds = 0;
 		this.sides = sides;
 		this.die = die;
 		this.maxRolls = rolls;
 		this.rolls = 0;
-		this.player = player;
-		this.scorecard = initDict(); 
+		this.scorecard = initDict();
 		this.hand = new Hand(sides,die,rolls);
 		this.scorer = new Score();
 		this.maxRounds = scorecard.size() - 3;
