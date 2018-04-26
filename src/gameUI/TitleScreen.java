@@ -8,15 +8,13 @@
  *
  * @version v1.0
  */
-package gameRunner;
+package gameUI;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -86,7 +84,7 @@ public class TitleScreen extends Application {
      * @param //stackpane root container for main layout
      * @return none
      */
-    private void createButtons(StackPane root, Stage primaryStage){
+    private void createButtons(StackPane root, final Stage primaryStage){
         //Create button 1 for launching the game
         Button button1 = new Button();
         //set button style from title.css and add text to button

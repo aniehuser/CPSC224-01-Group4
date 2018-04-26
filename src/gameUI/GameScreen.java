@@ -1,11 +1,16 @@
-package gameRunner;
+package gameUI;
 
+import gameRunner.Die;
+import gameRunner.Game;
+import gameRunner.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,10 +24,10 @@ public class GameScreen {
     private Text currentHandScore; //Display's the hand's current score
     private GridPane playerDiceButtons; //container for toggleButtons that allow user to select which dice they want to keep or reroll
 
-    private Button roll; //click and roll selected dice
-    private Button keepHand; //keeps the entire hand
-    private Button quit; //exit's the game
-    private Button titleScreen; //returns to titlescreen
+//    private Button roll; //click and roll selected dice
+//    private Button keepHand; //keeps the entire hand
+//    private Button quit; //exit's the game
+//    private Button titleScreen; //returns to titlescreen
 
     private Player currentPlayer; //player whose turn it is
     private int currentPlayerTracker; //tracks what players have played and who is up next
@@ -36,7 +41,8 @@ public class GameScreen {
      * @params stage currently being used and an array of player names
      * initializes and starts the logic of the actual game being played
      */
-    public void start(Stage primaryStage, ArrayList<String> names) {
+
+    public void start(final Stage primaryStage, ArrayList<String> names) {
         primaryStage.setTitle("Game Of Yahtzee");
 
         //initialize fields
@@ -63,8 +69,9 @@ public class GameScreen {
         currentPlayer = players.get(currentPlayerTracker);
         currentPlayer.rollInit();
 
+        //TODO: same problem as titlescreen
         //creates our quit button which exits the game
-        quit = new Button("Quit");
+        Button quit = new Button("Quit");
         quit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -72,8 +79,12 @@ public class GameScreen {
             }
         });
 
+        //TODO: Titlescreen appears to lose focus and is not clickable -> Carl need to fix this behavior
         //creates our titlescreen button which returns to the title screen
-        titleScreen = new Button("Title Screen");
+        Button titleScreen = new Button("Title Screen");
+//        System.out.println(titleScreen.isFocused());
+//        titleScreen.setFocusTraversable(false);
+//        titleScreen.requestFocus();
         titleScreen.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -83,7 +94,7 @@ public class GameScreen {
         });
 
         //creates our roll button which rolls the selected dice
-        roll = new Button("Roll");
+        Button roll = new Button("Roll");
         roll.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -93,8 +104,8 @@ public class GameScreen {
             }
         });
 
-        //create sour keephand button which keeps the whole hand
-        keepHand = new Button("Keep");
+        //create our keephand button which keeps the whole hand
+        Button keepHand = new Button("Keep");
         keepHand.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -104,23 +115,23 @@ public class GameScreen {
                         choice[i] = true;
                     }
                     currentPlayer.rollOnce(choice);
-                    if (currentPlayer.isRoundOver()){
+                    if (currentPlayer.isRoundOver()) {
                         turnOver();
                     }
                 }
             }
         });
 
-        //TODO: DELETE THIS
+        //TODO: DELETE THIS -> Carl
         //debugging stuff
         System.out.println(names);
         System.out.println(names.size());
         System.out.println(playerText.getText());
 
-        //TODO: DELETE THIS
+        //TODO: Create CSS for all our buttons and textFields -> Nicole
         //add css file later for this stuff to clean up code
-        quit.setTranslateX(200);
-        titleScreen.setTranslateX(-200);
+        quit.setTranslateX(500);
+        titleScreen.setTranslateX(-500);
         roll.setTranslateX(350);
         keepHand.setTranslateX(-350);
         playerText.setStyle("-fx-text-fill: black; -fx-font-size: 16;");
@@ -128,7 +139,7 @@ public class GameScreen {
         //grab the initial player's hand and instantiate our toggleButtons that control the die selection process
         Die[] playerHand = currentPlayer.getDie();
         for (int i = 0; i < game.getDieNum(); i++) {
-            playerDiceButtons.add(new ToggleButton(playerHand[i].toString()), i, 0, 1, currentPlayer.getHand().getRolls().length);
+            playerDiceButtons.add(new ToggleButton(playerHand[i].toString()), i, 0, 1, game.getDieNum());
         }
 
         //create our UI
@@ -149,7 +160,7 @@ public class GameScreen {
         //display currentPlayer
         playerText.setText(currentPlayer.getName() + "'s turn");
 
-        //TODO: Change to images instead of text
+        //TODO: Change to images instead of text - > Nicole you can do this if you'd like
         //set text on toggle buttons to reflect the current dice value
         Die[] playerHand = currentPlayer.getDie();
         for (Node node : playerDiceButtons.getChildren()) {
@@ -158,6 +169,7 @@ public class GameScreen {
             i++;
         }
     }
+
     /**
      * Simulates a player rolling their hand
      */
@@ -190,27 +202,23 @@ public class GameScreen {
      * there are multiple avenues of logic that could occur here see comments
      */
     private void turnOver() {
-        //TODO: This method needs a lot of work
+        //TODO: haven't started work on this method avoid coding in this -> Carl
         // to print out players current score, call the player objects toString() method
         System.out.println(currentPlayer.toString());
-
-//                for (Node button: playerDiceButtons.getChildren()) {
-
-//                    ToggleButton playerButton = (ToggleButton) button;
-//                    playerButton.setDisable(true);
-//                }
         currentHandScore.setText(currentPlayer.getScorer().toString());
         // first check to make sure the player hasnt already assigned the score to their scorecard.
         // this step is important because due to our special rules, i will not be doing checks in
-        // setScore(key) to make sure that an already assigned score
+//         setScore(key) to make sure that an already assigned score
 //                if(p.isScoreSet(keepScore)){
 //                    // set the player's score by inputting the string key of what the user chose
 //                    p.setScore(keepScore);
 //                }
+        System.out.println("Game round max :" + game.getMaxRounds());
+        System.out.println("Game round current:" + game.getCurrentRound());
         currentPlayerTracker++;
         game.incrementRound();
-        if (game.isGameOver()) {
-            //TODO: move to victory screen instead of ending game
+        if (!game.isGameOver()) {
+            //TODO: move to victory screen instead of ending game -> Carl
             // close globals
             game.end();
             System.exit(0);
@@ -220,7 +228,6 @@ public class GameScreen {
             currentPlayerTracker = 0;
         }
         currentPlayer = players.get(currentPlayerTracker);
-        game.incrementRound();
         currentPlayer.rollInit();
         gameDisplayController();
     }

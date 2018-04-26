@@ -1,7 +1,8 @@
 package gameRunner;
 
 import java.util.Hashtable;
-
+import factions.*;
+//comment
 /**
  * 
  * @author Anthony Niehuser
@@ -14,6 +15,7 @@ public class Player {
 	private Hashtable<String,Integer> scorecard; // store all value of score card. -1 means unnassigned
 	private Hand hand;
 	private Score scorer;
+//	private final IFaction faction;
 	
 	
 	private final int sides; // sides of dice
@@ -22,7 +24,6 @@ public class Player {
 	private final int maxRolls; // max number of rolls
 	private int rounds; // current number of rounds
 	private final int maxRounds; // max rounds in a game
-	private int player = 0; //static variable, increments with each new player
 	private String name; //contains a player's name
 	
 	/**
@@ -38,7 +39,7 @@ public class Player {
 		this.maxRolls = rolls;
 		this.rolls = 0;
 		this.scorecard = initDict();
-		this.hand = new Hand(sides,die,rolls);
+        this.hand = new Hand(sides,die,rolls);
 		this.scorer = new Score();
 		this.maxRounds = scorecard.size() - 3;
 		this.name = name;
@@ -48,7 +49,6 @@ public class Player {
 	 * @deprecated
 	 */
 	public void doRound(){
-		System.out.println("Player " + player);
 		if(rounds == maxRounds){
 			System.out.println("Error: Played too many rounds");
 			return;

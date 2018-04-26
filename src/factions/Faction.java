@@ -1,0 +1,11 @@
+package factions;
+
+public enum Faction {
+	STARKS,
+	LANNISTERS,
+	TARGARYEN,
+	WHITE_WALKERS,
+	BARATHEON,
+	GREYJOYS,
+	CHILDREN_OF_THE_FOREST
+}

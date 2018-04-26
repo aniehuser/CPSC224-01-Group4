@@ -1,4 +1,4 @@
-package gameRunner;
+package gameUI;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -114,7 +114,7 @@ public class PlayersScreen {
             //replace the number of players buttons with text fields for names
             //Create an ArrayList of TextFields, and loop and add to hbox
             hbox.getChildren().removeAll(btn1, btn2, btn3, btn4);
-            ArrayList<TextField> textFields = new ArrayList<TextField>(numOfNames);
+            final ArrayList<TextField> textFields = new ArrayList<TextField>(numOfNames);
             for (int i = 0; i < numOfNames; i++) {
                 textFields.add(new TextField());
                 textFields.get(i).setPromptText("Enter name " + (i+1));
