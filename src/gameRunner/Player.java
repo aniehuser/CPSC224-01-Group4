@@ -74,8 +74,15 @@ public class Player {
 		maxRolls++;
 		hand.incrementMaxRolls();
 	}
+	/**
+	 * CARL DO NOT USE THIS METHOD
+	 */
 	public void incrementMaxRounds(){
 		maxRounds++;
+	}
+	
+	public BaseFaction getFaction(){
+		return faction;
 	}
 	
 	public void rollInit(){
