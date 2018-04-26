@@ -51,7 +51,28 @@ public class Main {
 							   "Carl",
 							   Faction.STARKS);
 		
-	
+		boolean[] x = {true,true,true,true,true,true,false};
+		p.rollInit();
+		p.getHand().setDieByIndex(0,new Die(1, true));
+		System.out.println(p.getHand().toString());
+		System.out.println(p.getFaction().isExecuted());
+		System.out.println(p.getFaction().isSpecialHand());
+		p.getFaction().executeSpecial();
+		System.out.println(p.getFaction().isExecuted());
+		System.out.println(p.getMaxRolls());
+		p.rollOnce(x);
+		System.out.println(p.getHand().toString());
+		System.out.println(p.getMaxRolls());
+		p.rollOnce(x);
+		System.out.println(p.getHand().toString());
+		p.rollOnce(x);
+		System.out.println(p.getHand().toString());
+		p.rollOnce(x);
+		System.out.println(p.getHand().toString());
+		p.setScore("1");
+		System.out.println(p.toString());
+		
+		if(true) return;
 		// loop game until total rounds played == maxRounds (18). Do not increment round until
 		// every player has completed their round. I may edit the Game object to make these checks
 		// easier
