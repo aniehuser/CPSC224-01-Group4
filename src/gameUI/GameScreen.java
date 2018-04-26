@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -149,6 +150,7 @@ public class GameScreen {
         //grab the initial player's hand and instantiate our toggleButtons that control the die selection process
         Die[] playerHand = currentPlayer.getDie();
         for (int i = 0; i < game.getDieNum(); i++) {
+            System.out.println("TOGGLE BUTTONS:" + i);
             playerDiceButtons.add(new ToggleButton(playerHand[i].toString()), i, 0, 1, game.getDieNum());
         }
 
@@ -159,10 +161,13 @@ public class GameScreen {
         scoreListView.setItems(scoreListButtons);
 
         scoreVBoxContainer.getChildren().add(scoreListView);
+        StackPane.setAlignment(scoreVBoxContainer, Pos.TOP_RIGHT);
+
+        StackPane.setAlignment(playerDiceButtons, Pos.TOP_LEFT);
 
         //create our UI
         root.getChildren().addAll(playerText, quit, titleScreen, playerDiceButtons, roll, keepHand, currentHandScore, scoreVBoxContainer);
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 800, 700, Color.BLACK));
         primaryStage.show();
 
         //start our game loop
