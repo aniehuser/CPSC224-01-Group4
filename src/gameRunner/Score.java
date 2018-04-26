@@ -111,7 +111,7 @@ public class Score {
 	public void calculateUpperScore(){
 		Die[] rolls = hand.getRolls();
 		for(int i=1; i<=hand.getDieSides(); i++){
-			int count = 0; // count occurences of roll number
+			int count = 0; // count occurrences of roll number
 			for(int j=0; j<rolls.length; j++){
 				if(rolls[j].getType() == i){
 					count++;

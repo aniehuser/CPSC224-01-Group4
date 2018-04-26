@@ -50,7 +50,6 @@ public class Main {
 							   game.getRollsPerRound(), 
 							   "Carl",
 							   Faction.STARKS);
-
 		// loop game until total rounds played == maxRounds (18). Do not increment round until
 		// every player has completed their round. I may edit the Game object to make these checks
 		// easier
