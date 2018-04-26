@@ -11,21 +11,14 @@ public class ChildrenOfTheForestFaction extends BaseFaction {
 	public ChildrenOfTheForestFaction(Player p) {
 		super(p);
 		message = "Roll 4 White Walkers, turn one into the Night King!";
-	}
-
-	@Override
-	public boolean isSpecialHand() {
-		return Combo.maxOfGivenKindFound(6, p.getDie()) >= 4;
-	}
-	
-	public void executeSpecail(){
-		super.executeSpecial();
-		for(Die d : Arrays.asList(p.getDie())){
-			if(d.getType() == 6 && !d.isSpecial()){
-				d.setSpecial(true);
-				break;
+		condition = () -> Boolean.valueOf(Combo.maxOfGivenKindFound(6, p.getDie()) >= 4);
+		exec = () -> {
+			for(Die d : Arrays.asList(p.getDie())){
+				if(d.getType() == 6 && !d.isSpecial()){
+					d.setSpecial(true);
+					break;
+				}
 			}
-		}
+		};
 	}
-
 }
