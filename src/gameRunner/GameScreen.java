@@ -64,11 +64,21 @@ public class GameScreen {
             }
         });
 
+
+        //StackPane.setAlignment(handChoice, Pos.BOTTOM_CENTER);
+        handChoice.setAlignment(Pos.TOP_CENTER);
+        handChoice.setPadding(new Insets(20, 20, 20, 20));
+        handChoice.setHgap(40.0);
+        //StackPane.setAlignment(handChoice, Pos.BOTTOM_LEFT);
+        root.setPadding(new Insets(20, 20, 30, 20));
         root.getChildren().addAll(playerText, quit, title, hand, handChoice);
 
         //set the scene with root, show the stage
         primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
         primaryStage.show();
+
+
+
 
         game.start();
         //if problem starting game, ends program

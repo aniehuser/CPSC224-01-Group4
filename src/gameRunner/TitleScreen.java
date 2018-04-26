@@ -116,10 +116,11 @@ public class TitleScreen extends Application {
             public void handle(ActionEvent event) {
                 InstructionScreen instructionScreen = new InstructionScreen();
                 //try {
-                    instructionScreen.start(primaryStage);
+                instructionScreen.start(primaryStage);
                 //} catch (IOException e) {
                 //    e.printStackTrace();
                 //}
+
             }
         });
 
