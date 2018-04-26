@@ -39,7 +39,7 @@ public class Game {
 	/**
 	 * Default Constructor
 	 */
-	Game(){
+	public Game(){
 		validInstance = false;
 		updatedConfig = false;
 	}

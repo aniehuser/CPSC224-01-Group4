@@ -8,15 +8,13 @@
  *
  * @version v1.0
  */
-package gameRunner;
+package gameUI;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -58,7 +56,7 @@ public class TitleScreen extends Application {
 
         //add the game of thrones text
         ImageView imageView = new ImageView();
-        Image title = new Image(getClass().getClassLoader().getResourceAsStream("res/game_of_yahtzee_gray.png"));
+        Image title = new Image(getClass().getClassLoader().getResourceAsStream("./res/game_of_yahtzee_gray.png"));
         StackPane.setAlignment(imageView, Pos.TOP_CENTER);
         root.setPadding(new Insets(150, 0, 0,0));
         imageView.setEffect(new DropShadow(100, Color.WHITESMOKE));
@@ -77,7 +75,7 @@ public class TitleScreen extends Application {
 
         //create buttons
         createButtons(root, primaryStage);
-        
+
         //show Stage
         primaryStage.show();
     }
@@ -116,10 +114,11 @@ public class TitleScreen extends Application {
             public void handle(ActionEvent event) {
                 InstructionScreen instructionScreen = new InstructionScreen();
                 //try {
-                    instructionScreen.start(primaryStage);
+                instructionScreen.start(primaryStage);
                 //} catch (IOException e) {
                 //    e.printStackTrace();
                 //}
+
             }
         });
 

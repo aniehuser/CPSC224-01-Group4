@@ -1,0 +1,43 @@
+/**
+ * css file used for styling in TitleScreen
+ *
+ * CPSC 224-01, Spring 2018
+ * Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1.0
+ */
+
+.rich-blue{
+    -fx-background-color:
+        #000000,
+        linear-gradient(#7ebcea, #2f4b8f),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 30 30 30 30;
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+}
+.button1{
+    -fx-text-fill: #006464;
+    -fx-background-color: #DFB951;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.anchor {
+    -fx-background-image:url("throne_background.jpg");
+}
+
+#pane{
+    -fx-background-image: url("res/got_background_dark.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+

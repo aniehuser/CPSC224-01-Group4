@@ -46,10 +46,11 @@ public class Main {
 		
 		// intialize a player
 		Player p = new Player(game.getDieSides(),
-							   game.getDieNum(), 
+							   game.getDieNum(),
 							   game.getRollsPerRound(), 
 							   "Carl",
 							   Faction.STARKS);
+<<<<<<< HEAD
 		
 		boolean[] x = {true,true,true,true,true,true,false};
 		p.rollInit();
@@ -73,6 +74,8 @@ public class Main {
 		System.out.println(p.toString());
 		
 		if(true) return;
+=======
+>>>>>>> controller
 		// loop game until total rounds played == maxRounds (18). Do not increment round until
 		// every player has completed their round. I may edit the Game object to make these checks
 		// easier
