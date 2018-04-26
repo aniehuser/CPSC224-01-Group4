@@ -221,10 +221,7 @@ public class FactionScreen {
             }
             else{
                 playerName.setText(names.get(currentPlayer));
-
             }
-
         }
     }
-
 }
