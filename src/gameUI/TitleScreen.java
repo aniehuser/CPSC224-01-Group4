@@ -112,14 +112,15 @@ public class TitleScreen extends Application {
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //InstructionScreen instructionScreen = new InstructionScreen();
+                InstructionScreen instructionScreen = new InstructionScreen();
                 //try {
-                //instructionScreen.start(primaryStage);
+                instructionScreen.start(primaryStage);
                 //} catch (IOException e) {
                 //    e.printStackTrace();
                 //}
-                FactionScreen factionScreen = new FactionScreen();
-                factionScreen.start(primaryStage);
+                //FactionScreen factionScreen = new FactionScreen();
+                //factionScreen.start(primaryStage);
+
             }
         });
 
