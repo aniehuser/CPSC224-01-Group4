@@ -35,7 +35,8 @@ public class Combo {
 	}
 	
 	public static int numSpecialsByType(Die[] rolls, int type){
-		return getSpecialDieCounts(rolls).get(type);
+		Hashtable<Integer,Integer> specs = getSpecialDieCounts(rolls);
+		return (specs.containsKey(type)) ? specs.get(type) : 0;
 	}
 	public static boolean northFound(Die[] rolls){
 		return maxOfGivenKindFound(1, rolls) >= 5;
