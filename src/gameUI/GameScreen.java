@@ -1,5 +1,6 @@
 package gameUI;
 
+import factions.Faction;
 import gameRunner.Die;
 import gameRunner.Game;
 import gameRunner.Player;
@@ -66,7 +67,7 @@ public class GameScreen {
         //create our player's container
         players = new ArrayList<>();
         for (String string : names) {
-            players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), string));
+            players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), string, Faction.STARKS));
         }
 
         //intialize the current player

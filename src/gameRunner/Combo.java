@@ -33,6 +33,10 @@ public class Combo {
 		}
 		return max;
 	}
+	
+	public static int numSpecialsByType(Die[] rolls, int type){
+		return getSpecialDieCounts(rolls).get(type);
+	}
 	public static boolean northFound(Die[] rolls){
 		return maxOfGivenKindFound(1, rolls) >= 5;
 	}
@@ -55,7 +59,7 @@ public class Combo {
 		return maxOfGivenKindFound(7, rolls) >= 5;
 	}
 	
-	private static int maxOfGivenKindFound(int type, Die[] rolls){
+	public static int maxOfGivenKindFound(int type, Die[] rolls){
 		Hashtable<Integer,Integer> counts = getDieCounts(rolls);
 		return counts.containsKey(type) ? counts.get(type) : 0;
 	}
@@ -127,5 +131,21 @@ public class Combo {
 		}
 		return counts;
 	}
+	
+	private static Hashtable<Integer, Integer> getSpecialDieCounts(Die[] rolls){
+		Hashtable<Integer,Integer> counts = new Hashtable<Integer,Integer>();
+		for(int i=0; i<rolls.length; i++){
+			//if already contains key, increment value
+			if(rolls[i].isSpecial()){
+				if(counts.containsKey(rolls[i].getType())){
+					counts.put(rolls[i].getType(), counts.get(rolls[i].getType()) + 1);
+				} else { // else add new key
+					counts.put(rolls[i].getType(), 1);
+				}
+			}
+		}
+		return counts;
+	}
+	
 
 }

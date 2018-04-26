@@ -77,19 +77,6 @@ public class Score {
 	public int getScore(String key){
 		return scores.get(key);
 	}
-	/**
-	 * Calculate and populate values in scores given rolls in hand
-	 * @deprecated
-	 */
-	public void calculateScore(){
-		//Sort hand and output to terminal
-		sortHand();
-		System.out.print("Here is your sorted hand: ");
-		System.out.println(hand.toString());
-		
-		//Calculate scores
-		calculateLowerScore();
-	}
 	public void calculateScore(Hand hand){
 		this.hand = hand;
 		//Sort hand and output to terminal
@@ -136,6 +123,19 @@ public class Score {
 			int multiply = (specialCount[i-1]==0) ? 1 : specialCount[i-1] * BASE_MULTIPLIER[i];
 			scores.put(Integer.toString(i), count * i * multiply);
 		}
+	}
+	public int getMultiplierByType(int type){
+		if(type > specialCount.length || type < 1){
+			System.out.println("Error: Invalid Type Input");
+		}
+		return specialCount[type-1];
+	}
+	
+	public void setMultiplierByType(int type, int newVal){
+		if(type > specialCount.length || type < 1){
+			System.out.println("Error: Invalid Type Input");
+		}
+		specialCount[type-1] = newVal;
 	}
 	
 	/**

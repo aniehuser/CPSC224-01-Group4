@@ -16,16 +16,17 @@ public class Player {
 	private Hashtable<String,Integer> scorecard; // store all value of score card. -1 means unnassigned
 	private Hand hand;
 	private Score scorer;
-//	private final IFaction faction;
+	private final BaseFaction faction;
 	
 	
 	private final int sides; // sides of dice
 	private final int die; // number of die
 	private int rolls; // current number of rolls
-	private final int maxRolls; // max number of rolls
+	private int maxRolls; // max number of rolls
 	private int rounds; // current number of rounds
-	private final int maxRounds; // max rounds in a game
+	private int maxRounds; // max rounds in a game
 	private String name; //contains a player's name
+	private int bonusPoints = 0; // only used for special roll with BaratheonFaction
 	
 	/**
 	 * Constructor
@@ -33,7 +34,7 @@ public class Player {
 	 * @param die number of die
 	 * @param rolls rolls per round
 	 */
-	public Player(int sides, int die, int rolls, String name){
+	public Player(int sides, int die, int rolls, String name, Faction faction){
 		this.rounds = 0;
 		this.sides = sides;
 		this.die = die;
@@ -44,65 +45,40 @@ public class Player {
 		this.scorer = new Score();
 		this.maxRounds = scorecard.size() - 3;
 		this.name = name;
+		this.faction = initFaction(faction);
+	}
+	public BaseFaction initFaction(Faction f){
+		switch(f){
+		case STARKS:
+			return new StarksFaction(this);
+		case LANNISTERS:
+			return new LannistersFaction(this);
+		case TARGARYEN:
+			return new TargaryenFaction(this);
+		case WHITE_WALKERS:
+			return new WhiteWalkersFaction(this);
+		case BARATHEON:
+			return new BaratheonFaction(this);
+		case GREYJOYS:
+			return new GreyJoysFaction(this);
+		case CHILDREN_OF_THE_FOREST:
+			return new ChildrenOfTheForestFaction(this);
+		default:
+			System.out.println("Faction not yet implemented");
+			return new StarksFaction(this);
+		}
 	}
 	/**
-	 * Execute a single round for this player object
-	 * @deprecated
+	 * CARL DO NOT USE THIS METHOD
 	 */
-	public void doRound(){
-		if(rounds == maxRounds){
-			System.out.println("Error: Played too many rounds");
-			return;
-		}
-		
-		// Declare and Initialize variables 
-		Hand hand = new Hand(sides,die,rolls);
-		StringContainer inStr = new StringContainer();
-		boolean goodInput = false;
-		
-		//shuffle and output hand once automatically
-		hand.shuffleAll();
-		System.out.println(hand.toString());
-		
-		//shuffle game.getRollsPerRound - 1 number of times
-		for(int i=1; i<rolls; i++){
-			// get input and shuffle hand accordingly
-			goodInput = false;
-			while(!goodInput){
-				goodInput = InputHandler.dieToKeep(inStr);
-			}
-			// end loop when all input is y's
-			if(inStr.getString().matches("[yY]{"+die+"}")){
-				break;
-			}
-			// shuffle and display
-			hand.shuffle(inStr.getString());
-			System.out.println(hand.toString());
-		}
-		
-
-		// create score object and calculate available scores
-		Score score = new Score(hand);
-		score.calculateScore();
-		System.out.println(score.toString());
-		
-		// print score card
-		System.out.println(toString());
-		
-		// get input for score to keep
-		goodInput = InputHandler.scoreToKeep(inStr, scorecard);
-		while(!goodInput){
-			System.out.println("Invalid key or score has already been assigned, try again");
-			goodInput = InputHandler.scoreToKeep(inStr, scorecard);
-		}
-		
-		// set score and recalculate totals 
-		scorecard.put(inStr.getString(), score.getScore(inStr.getString()));
-		calculateTotals();
-		
-		//increment rounds
-		rounds++;
+	public void incrementMaxRolls(){
+		maxRolls++;
+		hand.incrementMaxRolls();
 	}
+	public void incrementMaxRounds(){
+		maxRounds++;
+	}
+	
 	public void rollInit(){
 		if(rolls != 0){
 			System.out.println("Roll Error: Cannot init started round");
@@ -110,6 +86,10 @@ public class Player {
 		}
 		hand = new Hand(sides, die, maxRolls);
 		hand.shuffleAll();
+		
+		if(faction.isSpecialHand()){
+			faction.executeSpecial();
+		}
 		rolls++;
 	}
 	public void rollOnce(boolean[] keep){
@@ -134,6 +114,11 @@ public class Player {
 			return;
 		}
 		rolls++;
+	
+		if(faction.isSpecialHand()){
+			faction.executeSpecial();
+		}
+		
 		if(isRoundOver()){
 			scorer.calculateScore(hand);
 			rounds++;
@@ -166,10 +151,13 @@ public class Player {
 			return;
 		}
 		if(!isScoreSet(key)){
+			scorecard.put(key, bonusPoints + scorecard.get(key) + scorer.getScore(key));
 			System.out.println("Score Error: Score has already been set");
-			return;
+		} else{
+			scorecard.put(key, bonusPoints + scorer.getScore(key));
 		}
-		scorecard.put(key, scorer.getScore(key));
+		
+		faction.resetFaction();
 		rolls = 0;
 	}
 	public boolean isScoreSet(String key){
@@ -245,6 +233,13 @@ public class Player {
 		d.put("Upper Total", 0);
 		d.put("Grand Total", 0);
 		return d;
+	}
+	/**
+	 * DO NOT USE
+	 * @param a
+	 */
+	public void setBonusPoints(int a){
+		bonusPoints = a;
 	}
 	/**
 	 * return string representation of current score card
