@@ -1,5 +1,7 @@
 package gameRunner;
 
+import javafx.beans.binding.IntegerBinding;
+
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -76,6 +78,9 @@ public class Score {
 	 */
 	public int getScore(String key){
 		return scores.get(key);
+	}
+	public String generateScoreMessage(String key){
+		return Integer.toString(scores.get(key)) + "on the " + key + " line";
 	}
 	public void calculateScore(Hand hand){
 		this.hand = hand;
