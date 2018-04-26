@@ -1,5 +1,7 @@
 package gameUI;
 
+import factions.Faction;
+import gameRunner.Player;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -17,6 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.util.ArrayList;
+
+import static gameRunner.Main.game;
+
 public class FactionScreen {
 
     private final Button stark = new Button();
@@ -26,9 +33,20 @@ public class FactionScreen {
     private final Button baratheon = new Button();
     private final Button forrester = new Button();
     private final Button whiteWalker = new Button();
+    private Text playerName;
+    private Stage stage;
+    private int amountOfPlayers;
+    private int currentPlayer;
+    private ArrayList<String> names;
+    private ArrayList<Faction> factions;
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage, ArrayList<String> playerNames) {
         primaryStage.setTitle("Game Of Yahtzee - Choose Faction");
+
+        stage = primaryStage;
+        amountOfPlayers = playerNames.size();
+        factions = new ArrayList<>();
+        names = playerNames;
 
         //root container, add the background, get style sheets, set padding
         GridPane root = new GridPane();
@@ -52,15 +70,13 @@ public class FactionScreen {
 
         //Text area to state whose turn it is to pick their faction
         //TODO: get current player's name and add it to text
-        Text text = new Text("Player: UnKNOWN's turn to pick faction");
-        text.setFill(Color.GRAY);
-        text.setFont(new Font(30));
-        GridPane.setHalignment(text, HPos.CENTER);
-        root.add(text, 1, 2);
-
+        playerName = new Text(playerNames.get(0));
+        playerName.setFill(Color.GRAY);
+        playerName.setFont(new Font(30));
+        GridPane.setHalignment(playerName, HPos.CENTER);
+        root.add(playerName, 1, 2);
 
         root.getColumnConstraints().add(new ColumnConstraints(240));
-
 
         stark.setId("stark");
         stark.setOnAction(new ButtonHandler());
@@ -131,9 +147,7 @@ public class FactionScreen {
 
     //TODO: change the which player's choice it is
     public class ButtonHandler implements EventHandler {
-
         DropShadow dsWhite;
-
         public ButtonHandler() {
             dsWhite = new DropShadow();
             dsWhite.setOffsetY(2.5f);
@@ -154,34 +168,60 @@ public class FactionScreen {
 
             switch (faction) {
                 case "stark":
+                    factions.add(Faction.STARKS);
                     stark.setEffect(dsWhite);
                     //stark.setVisible(false);
                     stark.setMouseTransparent(true);
                     break;
                 case "targaryen":
+                    factions.add(Faction.TARGARYEN);
                     targaryen.setEffect(dsWhite);
                     targaryen.setVisible(false);
                     break;
                 case "lannister":
+                    factions.add(Faction.LANNISTERS);
                     lannister.setEffect(dsWhite);
                     lannister.setVisible(false);
                     break;
                 case "greyjoy":
+                    factions.add(Faction.GREYJOYS);
                     greyjoy.setEffect(dsWhite);
                     greyjoy.setVisible(false);
                     break;
                 case "baratheon":
+                    factions.add(Faction.BARATHEON);
                     baratheon.setEffect(dsWhite);
                     baratheon.setVisible(false);
                     break;
                 case "forrester":
+                    factions.add(Faction.CHILDREN_OF_THE_FOREST);
                     forrester.setEffect(dsWhite);
                     forrester.setVisible(false);
                     break;
                 case "whitewalker":
+                    factions.add(Faction.WHITE_WALKERS);
                     whiteWalker.setEffect(dsWhite);
                     whiteWalker.setVisible(false);
                     break;
+            }
+            currentPlayer++;
+            System.out.println("Current player " + currentPlayer);
+            System.out.println("Max players " + amountOfPlayers);
+            System.out.println("Size of names array " + names.size());
+
+            if(currentPlayer >= amountOfPlayers){
+                game.start();
+                ArrayList<Player> players = new ArrayList<>();
+                for (int i = 0; i < names.size(); i++) {
+                    players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), names.get(i), factions.get(i)));
+                }
+                game.end();
+                GameScreen gameScreen = new GameScreen();
+                gameScreen.start(stage, players);
+            }
+            else{
+                playerName.setText(names.get(currentPlayer));
+
             }
 
         }

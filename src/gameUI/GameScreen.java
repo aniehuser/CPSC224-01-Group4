@@ -47,12 +47,12 @@ public class GameScreen {
      * initializes and starts the logic of the actual game being played
      */
 
-    public void start(final Stage primaryStage, ArrayList<String> names) {
+    public void start(final Stage primaryStage, ArrayList<Player> players) {
         primaryStage.setTitle("Game Of Yahtzee");
 
         //initialize fields
         currentHandScore = new Text();
-        playerText = new Text(names.get(0) + "'s turn");
+        playerText = new Text(players.get(0).getName() + "'s turn");
         playerDiceButtons = new GridPane();
 
         //initialize player variables and logic
@@ -62,14 +62,10 @@ public class GameScreen {
             System.exit(0);
         }
         currentPlayerTracker = 0;
-        maxPlayers = names.size() - 1;
+        maxPlayers = players.size() - 1;
 
         //create our player's container
-        players = new ArrayList<>();
-        for (String string : names) {
-            players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), string, Faction.STARKS));
-        }
-
+        this.players = players;
         //intialize the current player
         currentPlayer = players.get(currentPlayerTracker);
         currentPlayer.rollInit();
@@ -134,8 +130,8 @@ public class GameScreen {
 
         //TODO: DELETE THIS -> Carl
         //debugging stuff
-        System.out.println(names);
-        System.out.println(names.size());
+        System.out.println(players);
+        System.out.println(players.size());
         System.out.println(playerText.getText());
 
         //TODO: Create CSS for all our buttons and textFields -> Nicole
@@ -259,12 +255,11 @@ public class GameScreen {
     private void generateScorecard() {
         String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "Upper", "3 of a Kind", "4 of a Kind", "Full House", "The North",
                 "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee", "Lower", "Grand"};
-        ArrayList<String> scoreLines = currentPlayer.generateScoreList();
-        for (int i = 0; i < scoreLines.size() - 1; i++) {
-            if (currentPlayer.isScoreSet(scoreLabels[i])) {
-                Button button = new Button(scoreLines.get(i));
+        for (int i = 0; i < scoreLabels.length - 1; i++) {
+            if (currentPlayer.isScoreSet(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]))) {
+                Button button = new Button(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 button.setOnAction(new ScoreActionListener());
-                button.setId(scoreLabels[i]);
+                button.setId(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 scoreListButtons.add(button);
             }
         }

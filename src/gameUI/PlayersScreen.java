@@ -137,8 +137,8 @@ public class PlayersScreen {
                     for (TextField text: textFields) {
                         names.add(text.getText());
                     }
-                    GameScreen gameScreen = new GameScreen();
-                    gameScreen.start(primaryStage,names);
+                    FactionScreen factionScreen = new FactionScreen();
+                    factionScreen.start(primaryStage,names);
                 }
             });
 
