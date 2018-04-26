@@ -8,15 +8,13 @@
  *
  * @version v1.0
  */
-package gameRunner;
+package gameUI;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -114,13 +112,14 @@ public class TitleScreen extends Application {
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                InstructionScreen instructionScreen = new InstructionScreen();
+                //InstructionScreen instructionScreen = new InstructionScreen();
                 //try {
-                instructionScreen.start(primaryStage);
+                //instructionScreen.start(primaryStage);
                 //} catch (IOException e) {
                 //    e.printStackTrace();
                 //}
-
+                FactionScreen factionScreen = new FactionScreen();
+                factionScreen.start(primaryStage);
             }
         });
 

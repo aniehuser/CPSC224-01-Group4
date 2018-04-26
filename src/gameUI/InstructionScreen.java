@@ -1,5 +1,6 @@
-package gameRunner;
+package gameUI;
 
+import gameUI.TitleScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

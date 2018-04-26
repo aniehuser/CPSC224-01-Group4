@@ -1,4 +1,4 @@
-package gameRunner;
+package gameUI;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
