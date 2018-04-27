@@ -40,7 +40,7 @@ public class WinnerScreen {
             winner = player;
         }
 
-        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getScorer().getScore("Grand"));
+        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getScorer().totalAllDice());
         VBox vbox = new VBox();
         for (Player player :players) {
             vbox.getChildren().add(new Text(player.getScorer().toString()));
