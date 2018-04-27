@@ -218,7 +218,7 @@ public class GameScreen {
                     game.incrementRound();
                     if (!game.isGameOver()) {
                         // close globals
-                        game.end();
+//                        game.end();
                         WinnerScreen winnerScreen = new WinnerScreen();
                         winnerScreen.start(primaryStage, players);
                     }

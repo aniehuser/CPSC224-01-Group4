@@ -36,18 +36,20 @@ public class WinnerScreen {
 
         Player winner = players.get(0);
         for (Player player : players) {
-            if (player.getScorer().totalAllDice() > winner.getScorer().totalAllDice()) ;
-            winner = player;
+            if (player.getScore("Grand Total") > winner.getScore("Grand Total")) {
+                winner = player;
+            }
         }
 
-        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getScorer().totalAllDice());
+        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getScore("Grand Total"));
         VBox vbox = new VBox();
         for (Player player :players) {
-            vbox.getChildren().add(new Text(player.getScorer().toString()));
+            vbox.getChildren().add(new Text(player.toString()));
         }
 
         StackPane root = new StackPane();
         root.getChildren().addAll(titleScreenButton, quit, vbox, winnerText);
+
         primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
 
     }
