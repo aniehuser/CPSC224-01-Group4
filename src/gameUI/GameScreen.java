@@ -155,7 +155,7 @@ public class GameScreen {
 
         //clears the toggles on our toggle buttons
         resetButtons();
-
+        gameDisplayController();
         //roll the selected dice and generate new buttons to display the score
         currentPlayer.rollOnce(choice);
         generateScorecard();
