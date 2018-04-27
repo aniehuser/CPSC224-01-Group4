@@ -20,4 +20,8 @@ public class StarksFaction extends BaseFaction {
 		super.executeSpecial();
 		p.incrementMaxRolls();
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }

@@ -28,4 +28,8 @@ public class WhiteWalkersFaction extends BaseFaction {
 		}
 	}
 
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
+
 }

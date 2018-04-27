@@ -4,7 +4,6 @@ import gameRunner.Combo;
 import gameRunner.Player;
 
 public class BaratheonFaction extends BaseFaction {
-
 	public BaratheonFaction(Player p) {
 		super(p);
 		message = "If you roll 3 Kingsgaurd Knights, add 10 pts to this hand's Score!";
@@ -23,5 +22,9 @@ public class BaratheonFaction extends BaseFaction {
 	public void resetFaction(){
 		super.resetFaction();
 		p.setBonusPoints(0);
+	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
 	}
 }

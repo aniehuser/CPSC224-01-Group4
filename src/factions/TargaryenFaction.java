@@ -22,4 +22,8 @@ public class TargaryenFaction extends BaseFaction {
 			p.getScorer().setMultiplierByType(i, newVal);
 		}
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }

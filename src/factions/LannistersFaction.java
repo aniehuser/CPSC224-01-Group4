@@ -19,4 +19,8 @@ public class LannistersFaction extends BaseFaction {
 		super.executeSpecial();
 		p.incrementMaxRounds();
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }

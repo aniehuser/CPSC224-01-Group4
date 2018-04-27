@@ -1,5 +1,6 @@
 package gameUI;
 
+import factions.Faction;
 import gameRunner.Die;
 import gameRunner.Game;
 import gameRunner.Player;
@@ -38,6 +39,7 @@ public class GameScreen {
     private ArrayList<Player> players; //array containing all players
 
     private StackPane root = new StackPane();
+    private Stage primaryStage;
     private static final Game game = new Game(); //container for game logic
 
     /**
@@ -64,6 +66,7 @@ public class GameScreen {
 
         //create our player's container
         this.players = players;
+        this.primaryStage = primaryStage;
 
         //intialize the current player
         currentPlayer = players.get(currentPlayerTracker);
@@ -177,8 +180,8 @@ public class GameScreen {
      */
     private void generateScorecard() {
         //score labels are the keys to access the proper lines in our score object
-        String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "Upper", "3 of a Kind", "4 of a Kind", "Full House", "The North",
-                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee", "Lower", "Grand"};
+        String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "3 of a Kind", "4 of a Kind", "Full House", "The North",
+                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons"};
 
         //iterate through each line and add a message to the button representing it how many points that line is worth
         //set id to be the string representing the line the user selected
@@ -210,18 +213,24 @@ public class GameScreen {
                 if (currentPlayerTracker > maxPlayers) {
                     //start of new round
                     currentPlayerTracker = 0;
+                    System.out.println("Game round: " + game.getCurrentRound());
                     game.incrementRound();
                     if (!game.isGameOver()) {
-                        //TODO: move to victory screen instead of ending game -> Carl
                         // close globals
                         game.end();
-                        System.exit(0);
+                        WinnerScreen winnerScreen = new WinnerScreen();
+                        winnerScreen.start(primaryStage, players);
                     }
                 }
 
                 currentPlayer = players.get(currentPlayerTracker);
+                currentPlayer.rollInit();
                 generateScorecard();
                 gameDisplayController();
+
+                //TODO: delete this when done testing winner screen
+//                WinnerScreen winnerScreen = new WinnerScreen();
+//                winnerScreen.start(primaryStage, players);
             }
         }
     }
