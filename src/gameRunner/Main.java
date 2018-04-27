@@ -51,36 +51,7 @@ public class Main {
 							   "Carl",
 							   Faction.WHITE_WALKERS);
 		
-		boolean[] x = {true,true,true,true,true,true,false};
-		p.rollInit();
-		p.getHand().setDieByIndex(0,new Die(6 , true));
-		p.getHand().setDieByIndex(1,new Die(1, true));
-		p.getHand().setDieByIndex(2,new Die(1, false));
-		p.getHand().setDieByIndex(3,new Die(1, false));
-//		p.getScorer().setMultiplierByType(1, 1);
-//		p.getScorer().setMultiplierByType(3, 2);
-//		p.getScorer().setMultiplierByType(5, 1);
-//		p.getScorer().setMultiplierByType(6, 1);
-		System.out.println(p.getHand().toString());
-		System.out.println(p.getFaction().isExecuted());
-		System.out.println(p.getFaction().isSpecialHand());
-		p.getFaction().executeSpecial();
-		System.out.println(p.getFaction().isExecuted());
-		System.out.println(p.getHand().toString());;
-		p.rollOnce(x);
-		System.out.println(p.getHand().toString());
-		System.out.println(p.getMaxRolls());
-		p.rollOnce(x);
-		System.out.println(p.getHand().toString());
-		System.out.println(p.getMaxRolls());
-		p.rollOnce(x);
-		System.out.println(p.getHand().toString());
-		System.out.println(p.getMaxRolls());
-		p.setScore("3");
-		System.out.println(p.toString());
-		p.getScorer().getMultiplierByType(1);
-		
-		if(true) return;
+
 
 		// loop game until total rounds played == maxRounds (18). Do not increment round until
 		// every player has completed their round. I may edit the Game object to make these checks
