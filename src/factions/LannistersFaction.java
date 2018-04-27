@@ -12,4 +12,8 @@ public class LannistersFaction extends BaseFaction {
 							Combo.numSpecialsByType(p.getDie(), 5) >=1);
 		exec = () -> p.incrementMaxRounds();
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }

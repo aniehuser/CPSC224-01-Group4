@@ -43,4 +43,5 @@ public abstract class BaseFaction {
 	public boolean isExecuted(){
 		return executed;
 	}
+	public abstract Faction getFactionType();
 }

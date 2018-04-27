@@ -16,4 +16,8 @@ public class TargaryenFaction extends BaseFaction {
 			}
 		};
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }

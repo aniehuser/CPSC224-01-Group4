@@ -87,10 +87,7 @@ public class Player {
 	}
 	
 	public void rollInit(){
-		if(rolls != 0){
-			System.out.println("Roll Error: Cannot init started round");
-			return;
-		}
+		rolls = 0;
 		hand = new Hand(sides, die, maxRolls);
 		hand.shuffleAll();
 		

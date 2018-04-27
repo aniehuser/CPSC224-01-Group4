@@ -12,4 +12,8 @@ public class StarksFaction extends BaseFaction {
 		condition = () -> Boolean.valueOf(Combo.numSpecialsByType(p.getDie(), 1) >= 1);
 		exec = () -> p.incrementMaxRolls();
 	}
+
+	public Faction getFactionType(){
+		return Faction.BARATHEON;
+	}
 }
