@@ -114,17 +114,17 @@ public class Score {
 	public void calculateUpperScore(){
 		Die[] rolls = hand.getRolls();
 		for(int i=1; i<=hand.getDieSides(); i++){
-			int count = 0; // count occurrences of roll number
+			int values = 0; // count occurrences of roll number
 			for(int j=0; j<rolls.length; j++){
 				if(rolls[j].getType() == i){
-					count++;
+					values += rolls[j].getValue();
 					if(rolls[j].isSpecial()){
 						specialCount[i-1]++;
 					}
 				}
 			}
-			int multiply = (specialCount[i-1]==0) ? 1 : specialCount[i-1] * BASE_MULTIPLIER[i];
-			scores.put(Integer.toString(i), count * i * multiply);
+			int multiply = (specialCount[i-1]==0) ? 1 : specialCount[i-1] * BASE_MULTIPLIER[i-1];
+			scores.put(Integer.toString(i), values * multiply);
 		}
 	}
 	public int getMultiplierByType(int type){

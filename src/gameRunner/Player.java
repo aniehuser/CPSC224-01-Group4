@@ -166,7 +166,7 @@ public class Player {
 		} else{
 			scorecard.put(key, bonusPoints + scorer.getScore(key));
 		}
-		
+		calculateTotals();
 		faction.resetFaction();
 		rolls = 0;
 	}

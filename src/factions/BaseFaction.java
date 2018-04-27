@@ -21,6 +21,9 @@ public abstract class BaseFaction {
 	}
 	
 	public void executeSpecial(){
+		if(!isSpecialHand()){
+			return;
+		}
 		if(executed){
 			return;
 		}
