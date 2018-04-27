@@ -21,7 +21,7 @@ public class GreyJoysFaction extends BaseFaction {
 	}
 
 	public Faction getFactionType(){
-		return Faction.BARATHEON;
+		return Faction.GREYJOYS;
 	}
 
 }

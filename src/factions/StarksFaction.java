@@ -14,6 +14,6 @@ public class StarksFaction extends BaseFaction {
 	}
 
 	public Faction getFactionType(){
-		return Faction.BARATHEON;
+		return Faction.STARKS;
 	}
 }
