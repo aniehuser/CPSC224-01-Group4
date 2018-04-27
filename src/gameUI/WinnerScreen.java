@@ -36,12 +36,12 @@ public class WinnerScreen {
 
         Player winner = players.get(0);
         for (Player player : players) {
-            if (player.getScore("Grand Total") > winner.getScore("Grand Total")) {
+            if (player.getPlayerScoreByKey("Grand Total") > winner.getPlayerScoreByKey("Grand Total")) {
                 winner = player;
             }
         }
 
-        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getScore("Grand Total"));
+        Text winnerText = new Text("The winner is " + winner.getName() + " with a score of " + winner.getPlayerScoreByKey("Grand Total"));
         VBox vbox = new VBox();
         for (Player player :players) {
             vbox.getChildren().add(new Text(player.toString()));

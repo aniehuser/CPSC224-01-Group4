@@ -151,12 +151,6 @@ public class Player {
 	public int getMaxRolls(){
 		return maxRolls;
 	}
-	public Integer getScore(String key){
-//		if(!isScoreSet(key)){
-			return scorecard.get(key);
-//		}
-//		return null;
-	}
 	public void setScore(String key){
 		if(!isRoundOver()){
 			System.out.println("Score Error: Cannot score until round is over");
