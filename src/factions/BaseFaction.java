@@ -21,6 +21,9 @@ public abstract class BaseFaction {
 	}
 	
 	public void executeSpecial(){
+		if(!isSpecialHand()){
+			return;
+		}
 		if(executed){
 			return;
 		}
@@ -40,4 +43,5 @@ public abstract class BaseFaction {
 	public boolean isExecuted(){
 		return executed;
 	}
+	public abstract Faction getFactionType();
 }

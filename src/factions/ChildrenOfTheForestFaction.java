@@ -21,4 +21,8 @@ public class ChildrenOfTheForestFaction extends BaseFaction {
 			}
 		};
 	}
+
+	public Faction getFactionType(){
+		return Faction.CHILDREN_OF_THE_FOREST;
+	}
 }
