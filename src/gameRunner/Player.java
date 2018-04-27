@@ -133,10 +133,6 @@ public class Player {
 		
 	}
 	public Score getScorer(){
-		if(!isRoundOver()){
-			System.out.println("Score Error: Cannot score until round is over");
-			return null;
-		}
 		return scorer;
 	}
 
@@ -269,23 +265,7 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-    /**
-     * Clears toggle buttons so users can make a new choice on what die to keep
-     * use this method in between rolls
-     *
-     */
-    public ArrayList<String> generateScoreList(){
-        ArrayList<String> currentScoreCard = new ArrayList<>();
-        for(int i=1; i<=sides; i++){
-            int v = scorecard.get(Integer.toString(i));
-            currentScoreCard.add("Score " + ((v < 0) ? "nil" : v) + " on the " + i +" line.\n");
-        }
-        for(int i=0; i<lowerScoreTypes.length; i++) {
-            int v = scorecard.get(lowerScoreTypes[i]);
-            currentScoreCard.add("Score " + ((v < 0) ? "nil" : v) + " on the " + lowerScoreTypes[i] + " line.\n");
-        }
-        return currentScoreCard;
-    }
+
     public String toString(){
 		StringBuffer b = new StringBuffer();
 		b.append("Current Score Card:\n");

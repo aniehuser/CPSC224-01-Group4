@@ -1,6 +1,5 @@
 package gameUI;
 
-import factions.Faction;
 import gameRunner.Die;
 import gameRunner.Game;
 import gameRunner.Player;
@@ -24,11 +23,10 @@ public class GameScreen {
 
     //Display fields:
     private Text playerText; //Display's whose turn it currently is
-    private Text currentHandScore; //Display's the hand's current score
+    private Text factionBonus; //Display's the hand's current score
     private GridPane playerDiceButtons; //container for toggleButtons that allow user to select which dice they want to keep or reroll
 
-    Button roll;
-    Button keepHand;
+    Button roll; //button to allow a player to roll
 
     private ListView<Button> scoreListView; //creates a listview for displaying the possible avenues of score
     private ObservableList<Button> scoreListButtons = //creates a button array to attach to the listview
@@ -51,11 +49,11 @@ public class GameScreen {
         primaryStage.setTitle("Game Of Yahtzee");
 
         //initialize fields
-        currentHandScore = new Text();
+        factionBonus = new Text(players.get(0).getFaction().specialInstructions());
         playerText = new Text(players.get(0).getName() + "'s turn");
         playerDiceButtons = new GridPane();
 
-        //initialize player variables and logic
+        //initialize game variables and logic
         game.start();
         //if problem starting game, ends program
         if (!game.isValidInstance()) {
@@ -66,33 +64,10 @@ public class GameScreen {
 
         //create our player's container
         this.players = players;
+
         //intialize the current player
         currentPlayer = players.get(currentPlayerTracker);
         currentPlayer.rollInit();
-
-        //TODO: same problem as titlescreen
-        //creates our quit button which exits the game
-        Button quit = new Button("Quit");
-        quit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.exit(0);
-            }
-        });
-
-        //TODO: Titlescreen appears to lose focus and is not clickable -> Carl need to fix this behavior
-        //creates our titlescreen button which returns to the title screen
-        Button titleScreen = new Button("Title Screen");
-//        System.out.println(titleScreen.isFocused());
-//        titleScreen.setFocusTraversable(false);
-//        titleScreen.requestFocus();
-        titleScreen.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                TitleScreen titleScreen = new TitleScreen();
-                titleScreen.start(primaryStage);
-            }
-        });
 
         //creates our roll button which rolls the selected dice
         roll = new Button("Roll");
@@ -101,46 +76,16 @@ public class GameScreen {
             public void handle(ActionEvent event) {
                 if (currentPlayer != null) {
                     playerRoll();
-                    if (currentPlayer.isRoundOver()) {
-                        turnOver();
-                    }
                 }
             }
         });
-
-        //create our keephand button which keeps the whole hand
-        keepHand = new Button("Keep");
-        keepHand.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (currentPlayer != null) {
-                    boolean[] choice = new boolean[game.getDieNum()];
-                    for (int i = 0; i < choice.length; i++) {
-                        choice[i] = true;
-                    }
-                    currentPlayer.rollOnce(choice);
-//                    roll.setDisable(true);
-//                    keepHand.setDisable(true);
-                    if (currentPlayer.isRoundOver()) {
-                        turnOver();
-                    }
-                }
-            }
-        });
-
-        //TODO: DELETE THIS -> Carl
-        //debugging stuff
-        System.out.println(players);
-        System.out.println(players.size());
-        System.out.println(playerText.getText());
 
         //TODO: Create CSS for all our buttons and textFields -> Nicole
         //add css file later for this stuff to clean up code
-        quit.setTranslateX(500);
-        titleScreen.setTranslateX(-500);
         roll.setTranslateX(350);
-        keepHand.setTranslateX(-350);
         playerText.setStyle("-fx-text-fill: black; -fx-font-size: 16;");
+        factionBonus.setTranslateY(250);
+        factionBonus.setTranslateX(-250);
 
         //grab the initial player's hand and instantiate our toggleButtons that control the die selection process
         Die[] playerHand = currentPlayer.getDie();
@@ -157,7 +102,7 @@ public class GameScreen {
         scoreVBoxContainer.getChildren().add(scoreListView);
 
         //create our UI
-        root.getChildren().addAll(playerText, quit, titleScreen, playerDiceButtons, roll, keepHand, currentHandScore, scoreVBoxContainer);
+        root.getChildren().addAll(playerText, playerDiceButtons, roll, factionBonus, scoreVBoxContainer);
         primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
         primaryStage.show();
 
@@ -170,8 +115,8 @@ public class GameScreen {
      */
     private void gameDisplayController() {
         scoreListButtons.clear();
-        resetButtons();
         int i = 0;
+
         //display currentPlayer
         playerText.setText(currentPlayer.getName() + "'s turn");
 
@@ -204,33 +149,13 @@ public class GameScreen {
             }
             i++;
         }
-        currentPlayer.rollOnce(choice);
-        resetButtons();
-        generateScorecard();
-        if (currentPlayer.isRoundOver()) {
-            turnOver();
-        }
-    }
 
-    /**
-     * when a player's turn is over the preceding logic is handled in this method
-     * there are multiple avenues of logic that could occur here see comments
-     */
-    private void turnOver() {
-        //TODO: haven't started work on this method avoid coding in this -> Carl
-        // to print out players current score, call the player objects toString() method
-        System.out.println(currentPlayer.toString());
-        currentHandScore.setText(currentPlayer.getScorer().toString());
-        // first check to make sure the player hasnt already assigned the score to their scorecard.
-        // this step is important because due to our special rules, i will not be doing checks in
-//         setScore(key) to make sure that an already assigned score
-//                if(p.isScoreSet(keepScore)){
-//                    // set the player's score by inputting the string key of what the user chose
-//                    p.setScore(keepScore);
-//                }
+        //clears the toggles on our toggle buttons
+        resetButtons();
+
+        //roll the selected dice and generate new buttons to display the score
+        currentPlayer.rollOnce(choice);
         generateScorecard();
-        System.out.println("Game round max :" + game.getMaxRounds());
-        System.out.println("Game round current:" + game.getCurrentRound());
     }
 
     /**
@@ -238,8 +163,6 @@ public class GameScreen {
      * use this method in between rolls
      */
     private void resetButtons() {
-//        roll.setDisable(false);
-//        keepHand.setDisable(false);
         for (Node node : playerDiceButtons.getChildren()) {
             ToggleButton playerButton = (ToggleButton) node;
             if (playerButton.isSelected()) {
@@ -253,31 +176,37 @@ public class GameScreen {
      * button ids are assigned with our line labels
      */
     private void generateScorecard() {
+        //score labels are the keys to access the proper lines in our score object
         String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "Upper", "3 of a Kind", "4 of a Kind", "Full House", "The North",
                 "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee", "Lower", "Grand"};
+
+        //iterate through each line and add a message to the button representing it how many points that line is worth
+        //set id to be the string representing the line the user selected
         for (int i = 0; i < scoreLabels.length - 1; i++) {
-            if (currentPlayer.isScoreSet(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]))) {
+            if (currentPlayer.isScoreSet((scoreLabels[i]))) {
                 Button button = new Button(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 button.setOnAction(new ScoreActionListener());
-                button.setId(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
+                button.setId(scoreLabels[i]);
                 scoreListButtons.add(button);
             }
         }
     }
+
     /**
      * custom listener to handle our scoreline events
      */
     private class ScoreActionListener implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
             Button pressedLine = (Button) event.getSource();
-            System.out.println(currentPlayer.isScoreSet(pressedLine.getId()));
-
             if (currentPlayer.isScoreSet(pressedLine.getId())) {
-
                 // set the player's score by inputting the string key of what the user chose
                 currentPlayer.setScore(pressedLine.getId());
-                System.out.println("is round over in listener: " + currentPlayer.isRoundOver());
-                currentPlayerTracker++;
+                currentPlayerTracker++; //increment to next player
+
+                //reset our toggle buttons
+                resetButtons();
+
+                //all players played a round increment game round
                 if (currentPlayerTracker > maxPlayers) {
                     //start of new round
                     currentPlayerTracker = 0;
@@ -289,12 +218,11 @@ public class GameScreen {
                         System.exit(0);
                     }
                 }
-                currentPlayer = players.get(currentPlayerTracker);
-                currentPlayer.rollInit();
-                gameDisplayController();
 
+                currentPlayer = players.get(currentPlayerTracker);
+                generateScorecard();
+                gameDisplayController();
             }
         }
     }
-
 }

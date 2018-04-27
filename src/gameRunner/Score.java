@@ -77,8 +77,14 @@ public class Score {
 	public int getScore(String key){
 		return scores.get(key);
 	}
+
+	/**
+	 * Get a specified score key and get the appropriate score for the hand
+	 * @param key  string value of key in dictionary
+	 * @return integer value of key parameter
+	 */
 	public String generateScoreMessage(String key){
-		return Integer.toString(scores.get(key)) + "on the " + key + " line";
+		return Integer.toString(scores.get(key)) + " on the " + key + " line";
 	}
 	public void calculateScore(Hand hand){
 		this.hand = hand;
