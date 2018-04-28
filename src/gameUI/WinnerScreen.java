@@ -48,7 +48,7 @@ public class WinnerScreen {
 
         StackPane root = new StackPane();
         root.getChildren().addAll(titleScreenButton, quit, vbox, winnerText);
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
 
     }
 }

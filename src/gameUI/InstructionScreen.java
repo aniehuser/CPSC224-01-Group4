@@ -72,7 +72,7 @@ public class InstructionScreen {
         }
 
         //set the scene
-        Scene scene = new Scene(root, 1100, 1000, Color.BLACK);
+        Scene scene = new Scene(root, 1150, 700, Color.BLACK);
         primaryStage.setScene(scene);
 
         //Set the imageView - Instructions Header

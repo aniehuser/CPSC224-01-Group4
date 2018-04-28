@@ -140,7 +140,7 @@ public class FactionScreen {
         root.add(whiteWalker, 2, 5);
 
         //set the scene with root, show the stage
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
     }
@@ -170,8 +170,7 @@ public class FactionScreen {
                 case "stark":
                     factions.add(Faction.STARKS);
                     stark.setEffect(dsWhite);
-                    //stark.setVisible(false);
-                    stark.setMouseTransparent(true);
+                    stark.setVisible(false);
                     break;
                 case "targaryen":
                     factions.add(Faction.TARGARYEN);
