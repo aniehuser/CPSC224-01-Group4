@@ -8,9 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -74,6 +79,12 @@ public class GameScreen {
 
         //creates our roll button which rolls the selected dice
         roll = new Button("Roll");
+        roll.getStyleClass().add("rich-blue");
+        StackPane.setAlignment(roll, Pos.CENTER);
+        roll.setMinSize(150,75);
+        roll.setMaxSize(200, 100);
+        roll.setTranslateY(275);
+        roll.setTranslateX(150);
         roll.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -83,12 +94,16 @@ public class GameScreen {
             }
         });
 
-        //TODO: Create CSS for all our buttons and textFields -> Nicole
-        //add css file later for this stuff to clean up code
-        roll.setTranslateX(350);
-        playerText.setStyle("-fx-text-fill: black; -fx-font-size: 16;");
-        factionBonus.setTranslateY(250);
-        factionBonus.setTranslateX(-250);
+        //set the player's Turn and display their special feature
+        playerText.setStyle("-fx-text-fill: white; -fx-font-size: 40;");
+        playerText.setFill(Color.WHITESMOKE);
+        factionBonus.setFill(Color.WHITESMOKE);
+        playerText.setStyle("-fx-font-size: 30;");
+        StackPane.setAlignment(factionBonus, Pos.CENTER_LEFT);
+        StackPane.setAlignment(playerText, Pos.CENTER_LEFT);
+        playerText.setTranslateY(40);
+        factionBonus.setTranslateY(280);
+        playerText.setTranslateY(250);
 
         //grab the initial player's hand and instantiate our toggleButtons that control the die selection process
         Die[] playerHand = currentPlayer.getDie();
@@ -96,17 +111,31 @@ public class GameScreen {
             playerDiceButtons.add(new ToggleButton(playerHand[i].toString()), i, 0, 1, game.getDieNum());
         }
 
+        //Create a Scorecard title so they know what scoreListView is for
+        ImageView imageView = new ImageView();
+        Image title = new Image(getClass().getClassLoader().getResourceAsStream("res/scorecard_faction.png"));
+        imageView.setImage(title);
+        StackPane.setAlignment(imageView, Pos.TOP_RIGHT);
+        imageView.setTranslateY(170);
+
         //create our button listview
         VBox scoreVBoxContainer = new VBox();
         scoreVBoxContainer.setMaxWidth(200);
         scoreListView = new ListView<>();
         scoreListView.setItems(scoreListButtons);
-
+        scoreVBoxContainer.setTranslateY(195);
         scoreVBoxContainer.getChildren().add(scoreListView);
+        StackPane.setAlignment(scoreVBoxContainer, Pos.TOP_RIGHT);
+        StackPane.setAlignment(playerDiceButtons, Pos.TOP_CENTER);
+        playerDiceButtons.setHgap(10);
+        playerDiceButtons.setPadding(new Insets(0, 0, 0, 10));
 
         //create our UI
-        root.getChildren().addAll(playerText, playerDiceButtons, roll, factionBonus, scoreVBoxContainer);
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        root.setPadding(new Insets(25, 25, 50, 25));
+        root.getChildren().addAll(playerText, playerDiceButtons, roll, factionBonus, scoreVBoxContainer, imageView);
+        root.getStylesheets().add("title.css");
+        root.setId("pane2");
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
         //start our game loop
@@ -123,15 +152,75 @@ public class GameScreen {
         //display currentPlayer
         playerText.setText(currentPlayer.getName() + "'s turn");
 
-        //TODO: Change to images instead of text - > Nicole you can do this if you'd like
         //set text on toggle buttons to reflect the current dice value
         Die[] playerHand = currentPlayer.getDie();
         for (Node node : playerDiceButtons.getChildren()) {
             ToggleButton toggleButton = (ToggleButton) node;
-            toggleButton.setText(playerHand[i].toString());
+
+            //Initialize toggle button to match the specs of css file
+            toggleButton.setText(null);
+            toggleButton.setBackground(Background.EMPTY);
+            toggleButton.getStyleClass().clear();
+            toggleButton.setText(null);
+            playerDiceButtons.setHgap(50);
+
+
+            //Get the Type of each die roll and set it to that image
+            switch (playerHand[i].getType()) {
+                case 1: //Nightswatch Ranger -- Jon Snow
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button1s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button1");
+                    }
+                    break;
+                case 2: //Knightsguard Knight -- Jamie Lannister
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button2s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button2");
+                    }
+                    break;
+                case 3:  //Faceless men -- Arya Stark
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button3s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button3");
+                    }
+                    break;
+                case 4:  //Undead -- Undead Dragon
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button4s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button4");
+                    }
+                    break;
+                case 5: //Wildfire -- Cersei
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button5s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button5");
+                    }
+                    break;
+                case 6: //White Walker -- the Night King
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button6s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button6");
+                    }
+                    break;
+                case 7:  //Dragon -- Drogon
+                    if (playerHand[i].isSpecial()) {
+                        toggleButton.getStyleClass().add("toggle-button7s");
+                    } else {
+                        toggleButton.getStyleClass().add("toggle-button7");
+                    }
+                    break;
+            }
             i++;
         }
     }
+
 
     /**
      * Simulates a player rolling their hand
@@ -171,6 +260,8 @@ public class GameScreen {
             if (playerButton.isSelected()) {
                 playerButton.setSelected(false);
             }
+            playerButton.getStyleClass().clear();
+            playerButton.setText(null);
         }
     }
 
@@ -230,8 +321,8 @@ public class GameScreen {
                 gameDisplayController();
 
                 //TODO: delete this when done testing winner screen
-//                WinnerScreen winnerScreen = new WinnerScreen();
-//                winnerScreen.start(primaryStage, players);
+                WinnerScreen winnerScreen = new WinnerScreen();
+                winnerScreen.start(primaryStage, players);
             }
         }
     }

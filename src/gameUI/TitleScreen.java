@@ -24,6 +24,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
+
 
 public class TitleScreen extends Application {
     /**
@@ -31,9 +35,7 @@ public class TitleScreen extends Application {
      * @param  args
      * @return none
      */
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
     /**
      * on start run this method
      * @param //Stage primaryStage
@@ -71,7 +73,7 @@ public class TitleScreen extends Application {
         root.getChildren().addAll(winOrDieImage);
 
         //add a Scene to stage
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
 
         //create buttons
         createButtons(root, primaryStage);
@@ -118,6 +120,8 @@ public class TitleScreen extends Application {
                 //} catch (IOException e) {
                 //    e.printStackTrace();
                 //}
+                //FactionScreen factionScreen = new FactionScreen();
+                //factionScreen.start(primaryStage);
 
             }
         });

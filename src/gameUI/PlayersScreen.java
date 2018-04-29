@@ -77,7 +77,7 @@ public class PlayersScreen {
         root.getChildren().addAll(hbox, imageView);
 
         //set the scene with root, show the stage
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
         //Button Listeners for the number of players buttons
