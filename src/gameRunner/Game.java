@@ -54,7 +54,7 @@ public class Game {
 			die = file.nextInt();
 			rolls = file.nextInt();
 			rounds = 0;
-			maxRounds = sides + 9;
+			maxRounds = sides + 10;
 			file.close();
 			
 			//check if values are valid

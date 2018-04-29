@@ -3,6 +3,17 @@ package factions;
 import gameRunner.Combo;
 import gameRunner.Player;
 
+/**
+ * Extends BaseFaction and specifies conditions and executions for Baratheon
+ * faction.
+ * 
+ * CPSC 224-01, Spring 2018
+ * Final Project
+ * 
+ * @author Anthony Niehuser
+ *
+ * @version v1.0  4/29/2018
+ */
 public class BaratheonFaction extends BaseFaction {
 	public BaratheonFaction(Player p) {
 		super(p);
