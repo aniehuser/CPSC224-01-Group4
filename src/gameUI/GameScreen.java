@@ -214,6 +214,7 @@ public class GameScreen {
                     //start of new round
                     currentPlayerTracker = 0;
                     System.out.println("Game round: " + game.getCurrentRound());
+                    System.out.println("Max game round: " + game.getMaxRounds());
                     game.incrementRound();
                     if (!game.isGameOver()) {
                         // close globals
