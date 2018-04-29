@@ -6,6 +6,17 @@ import gameRunner.Combo;
 import gameRunner.Player;
 import gameRunner.Die;
 
+/**
+ * Extends BaseFaction and specifies conditions and executions for GreyJoys
+ * faction.
+ * 
+ * CPSC 224-01, Spring 2018
+ * Final Project
+ * 
+ * @author Anthony Niehuser
+ *
+ * @version v1.0  4/29/2018
+ */
 public class GreyJoysFaction extends BaseFaction {
 	public GreyJoysFaction(Player p) {
 		super(p);

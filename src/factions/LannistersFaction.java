@@ -5,6 +5,17 @@ import gameRunner.Combo;
 import gameRunner.Die;
 import gameRunner.Player;
 
+/**
+ * Extends BaseFaction and specifies conditions and executions for Lannisters
+ * faction.
+ * 
+ * CPSC 224-01, Spring 2018
+ * Final Project
+ * 
+ * @author Anthony Niehuser
+ *
+ * @version v1.0  4/29/2018
+ */
 public class LannistersFaction extends BaseFaction {
 
 	public LannistersFaction(Player p){

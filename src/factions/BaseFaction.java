@@ -4,6 +4,16 @@ import gameRunner.Player;
 import java.util.function.Supplier;
 import java.lang.Runnable;
 
+/**
+ * Abstract class used to create underlying logic of special die rolls.
+ * 
+ * CPSC 224-01, Spring 2018
+ * Final Project
+ * 
+ * @author anthonyniehuser
+ *
+ * @version v1.0  4/29/2018
+ */
 public abstract class BaseFaction {
 	protected Player p;
 	protected String message; 

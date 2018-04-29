@@ -4,6 +4,18 @@ package factions;
 import gameRunner.Player;
 import gameRunner.Combo;
 
+
+/**
+ * Extends BaseFaction and specifies conditions and executions for Starks
+ * faction.
+ * 
+ * CPSC 224-01, Spring 2018
+ * Final Project
+ * 
+ * @author Anthony Niehuser
+ *
+ * @version v1.0  4/29/2018
+ */
 public class StarksFaction extends BaseFaction {
 	public StarksFaction(Player p){
 		super(p);
