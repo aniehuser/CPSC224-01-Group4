@@ -321,8 +321,8 @@ public class GameScreen {
                 gameDisplayController();
 
                 //TODO: delete this when done testing winner screen
-//                WinnerScreen winnerScreen = new WinnerScreen();
-//                winnerScreen.start(primaryStage, players);
+                WinnerScreen winnerScreen = new WinnerScreen();
+                winnerScreen.start(primaryStage, players);
             }
         }
     }
