@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static gameUI.TitleScreen.game;
+
 public class GameScreen {
 
     //Display fields:
@@ -42,10 +44,11 @@ public class GameScreen {
     private int currentPlayerTracker; //tracks what players have played and who is up next
     private int maxPlayers; //how many players are playing
     private ArrayList<Player> players; //array containing all players
+    private int maxRolls; //max amount of rolls
+    private int currentRolls; //current amount of rolls
 
     private StackPane root = new StackPane();
     private Stage primaryStage;
-    private static final Game game = new Game(); //container for game logic
 
     /**
      * @params stage currently being used and an array of player names
@@ -60,10 +63,8 @@ public class GameScreen {
         playerText = new Text(players.get(0).getName() + "'s turn");
         playerDiceButtons = new GridPane();
 
-        //initialize game variables and logic
-        game.start();
         //if problem starting game, ends program
-        if (!game.isValidInstance()) {
+        if (!TitleScreen.game.isValidInstance()) {
             System.exit(0);
         }
         currentPlayerTracker = 0;
@@ -76,6 +77,8 @@ public class GameScreen {
         //intialize the current player
         currentPlayer = players.get(currentPlayerTracker);
         currentPlayer.rollInit();
+        maxRolls = game.getRollsPerRound()-1;
+        currentRolls = 1;
 
         //creates our roll button which rolls the selected dice
         roll = new Button("Roll");
@@ -89,7 +92,9 @@ public class GameScreen {
             @Override
             public void handle(ActionEvent event) {
                 if (currentPlayer != null) {
-                    playerRoll();
+                    if(!currentPlayer.isRoundOver() && currentRolls < maxRolls) {
+                        playerRoll();
+                    }
                 }
             }
         });
@@ -135,11 +140,15 @@ public class GameScreen {
         root.getChildren().addAll(playerText, playerDiceButtons, roll, factionBonus, scoreVBoxContainer, imageView);
         root.getStylesheets().add("title.css");
         root.setId("pane2");
+
+        //start our game loop
+        generateScorecard();
+        gameDisplayController();
+
         primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
-        //start our game loop
-        gameDisplayController();
+
     }
 
     /**
@@ -241,12 +250,12 @@ public class GameScreen {
             }
             i++;
         }
-
+        currentRolls++;
         //clears the toggles on our toggle buttons
         resetButtons();
-        gameDisplayController();
         //roll the selected dice and generate new buttons to display the score
         currentPlayer.rollOnce(choice);
+        gameDisplayController();
         generateScorecard();
     }
 
@@ -292,38 +301,42 @@ public class GameScreen {
     private class ScoreActionListener implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
             Button pressedLine = (Button) event.getSource();
+            System.out.println("before " + currentPlayer.isScoreSet(pressedLine.getId()));
+
+            if(!currentPlayer.isPlayerTurnsOver()) {
+                boolean[] choice = new boolean[game.getDieNum()];
+                for (int i = 0; i < choice.length - 1; i++) {
+                    choice[i] = true;
+                }
+                currentPlayer.rollOnce(choice);
+            }
             if (currentPlayer.isScoreSet(pressedLine.getId())) {
                 // set the player's score by inputting the string key of what the user chose
                 currentPlayer.setScore(pressedLine.getId());
+                System.out.println("after " + currentPlayer.isScoreSet(pressedLine.getId()));
                 currentPlayerTracker++; //increment to next player
-
-                //reset our toggle buttons
-                resetButtons();
 
                 //all players played a round increment game round
                 if (currentPlayerTracker > maxPlayers) {
                     //start of new round
                     currentPlayerTracker = 0;
-                    System.out.println("Game round: " + game.getCurrentRound());
-                    System.out.println("Max game round: " + game.getMaxRounds());
+                    currentRolls = 1;
                     game.incrementRound();
                     if (!game.isGameOver()) {
                         // close globals
-                        game.end();
                         WinnerScreen winnerScreen = new WinnerScreen();
                         winnerScreen.start(primaryStage, players);
                     }
                 }
 
+                resetButtons();
                 currentPlayer = players.get(currentPlayerTracker);
                 currentPlayer.rollInit();
-                generateScorecard();
-                gameDisplayController();
-
-                //TODO: delete this when done testing winner screen
-                WinnerScreen winnerScreen = new WinnerScreen();
-                winnerScreen.start(primaryStage, players);
             }
+            generateScorecard();
+            gameDisplayController();
+            System.out.println("Current round: " + game.getCurrentRound());
+            System.out.println("Max round" + game.getMaxRounds());
         }
     }
 }

@@ -124,7 +124,7 @@ public class Player {
 		}
 		
 		if(isRoundOver()){
-			scorer.calculateScore(hand);
+			scorer.calculateScore(hand.clone());
 			rounds++;
 		}
 		

@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static gameUI.TitleScreen.game;
+
 public class WinnerScreen {
 
     Faction wf;
@@ -58,12 +60,13 @@ public class WinnerScreen {
             root.setId("pane5");
         }
 
-        Button quit = new Button("Quit");
-        StackPane.setAlignment(quit, Pos.BOTTOM_RIGHT);
-        quit.getStyleClass().add("rich-blue");
-        quit.setOnAction(new EventHandler<ActionEvent>() {
+        Button exitProgram = new Button("Quit");
+        StackPane.setAlignment(exitProgram, Pos.BOTTOM_RIGHT);
+        exitProgram.getStyleClass().add("rich-blue");
+        exitProgram.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                game.end();
                 System.exit(0);
             }
         });
@@ -79,12 +82,13 @@ public class WinnerScreen {
             }
         });
 
-        Button titleScreenButton = new Button("Return to Title Screen");
-        StackPane.setAlignment(titleScreenButton, Pos.BOTTOM_LEFT);
-        titleScreenButton.getStyleClass().add("rich-blue");
-        titleScreenButton.setOnAction(new EventHandler<ActionEvent>() {
+        Button returnToTitleButton = new Button("Return to Title Screen");
+        StackPane.setAlignment(returnToTitleButton, Pos.BOTTOM_LEFT);
+        returnToTitleButton.getStyleClass().add("rich-blue");
+        returnToTitleButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                game.end();
                 TitleScreen titleScreen = new TitleScreen();
                 titleScreen.start(primaryStage);
             }
@@ -119,10 +123,11 @@ public class WinnerScreen {
         vbox.setAlignment(Pos.TOP_LEFT);
         vbox.setTranslateY(55);
 
+
         //StackPane.setAlignment(vbox, Pos.CENTER_LEFT);
 
         root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(titleScreenButton, quit, vbox, winnerText, viewScores);
+        root.getChildren().addAll(returnToTitleButton, exitProgram, vbox, winnerText, viewScores);
         primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
     }

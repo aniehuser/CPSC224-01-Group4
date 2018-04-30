@@ -22,7 +22,8 @@ import javafx.stage.Stage;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
-import static gameRunner.Main.game;
+import static gameUI.TitleScreen.game;
+
 
 public class FactionScreen {
 
@@ -42,6 +43,7 @@ public class FactionScreen {
 
     public void start(Stage primaryStage, ArrayList<String> playerNames) {
         primaryStage.setTitle("Game Of Yahtzee - Choose Faction");
+
 
         stage = primaryStage;
         amountOfPlayers = playerNames.size();
@@ -209,12 +211,10 @@ public class FactionScreen {
             System.out.println("Size of names array " + names.size());
 
             if(currentPlayer >= amountOfPlayers){
-                game.start();
                 ArrayList<Player> players = new ArrayList<>();
                 for (int i = 0; i < names.size(); i++) {
                     players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), names.get(i), factions.get(i)));
                 }
-                game.end();
                 GameScreen gameScreen = new GameScreen();
                 gameScreen.start(stage, players);
             }
