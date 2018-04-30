@@ -6,7 +6,7 @@ import java.util.Random;
  * and stores role values.
  * 
  * CPSC 224-01, Spring 2018
- * Programming Assignment #6
+ * Final Project
  * 
  * @author Anthony Niehuser
  * 
@@ -93,7 +93,6 @@ public class Hand implements Cloneable {
 	 * @return array of roll values
 	 */
 	public Die[] getRolls() {
-		//TODO:: deep copy
 		return rolls;
 	}
 

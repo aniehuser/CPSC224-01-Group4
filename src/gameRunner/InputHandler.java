@@ -7,11 +7,11 @@ import java.util.Hashtable;
  * and return false if not
  * 
  * CPSC 224-01, Spring 2018
- * Programming Assignment #6
+ * Final Project
  * 
  * @author Anthony Niehuser
  * 
- * @version v2.0 3/05/2018
+ * @version v2.1 4/29/2018
  */
 public class InputHandler {
 	//parameters used in handler

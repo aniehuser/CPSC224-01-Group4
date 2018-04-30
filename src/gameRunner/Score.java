@@ -4,15 +4,14 @@ import java.util.Arrays;
 import java.util.Hashtable;
 
 /**
- * Class to calculate and describe scores available to choose.
- * TODO:: Choose one score and apply to scorecard 
+ * Class to calculate and describe scores available to choose. 
  * 
  * CPSC 224-01, Spring 2018
- * Programming Assignment #6
+ * Final Project
  * 
  * @author Anthony Niehuser
  * 
- * @version v1.1 3/19/2018
+ * @version v2.0 4/29/2018
  */
 public class Score {
 	//constants and dictionary keys
@@ -29,19 +28,14 @@ public class Score {
 	private final int DRAGONS = 60;
 	private final int YAHTZEE = 100;
 
-	private int[] specialCount = {0,0,0,0,0,0,0};
+
+	private int[] specialCount = {0,0,0,0,0,0,0};// track a player's multipliers
 	private Hashtable<String,Integer> scores;//Store possible scores
-	private Hand hand;	//Store hand info
-	
+	private Hand hand;//Store hand info
+
 	/**
-	 * Constructor
-	 * @param hand to determine what scores are available
-	 * @deprecated
+	 * Default Constructor
 	 */
-	public Score(Hand hand){
-		this.hand = hand;
-		scores = initDict();
-	}
 	public Score(){
 		this.hand = null;
 		scores = initDict();
@@ -77,7 +71,6 @@ public class Score {
 	public int getScore(String key){
 		return scores.get(key);
 	}
-
 	/**
 	 * Get a specified score key and get the appropriate score for the hand
 	 * @param key  string value of key in dictionary
@@ -86,6 +79,10 @@ public class Score {
 	public String generateScoreMessage(String key){
 		return Integer.toString(scores.get(key)) + " on the " + key + " line";
 	}
+	/**
+	 * Calculate a score given a hand's values
+	 * @param hand given hand
+	 */
 	public void calculateScore(Hand hand){
 		this.hand = hand;
 		//Sort hand and output to terminal
@@ -133,20 +130,29 @@ public class Score {
 			scores.put(Integer.toString(i), values * multiply);
 		}
 	}
+	/**
+	 * Get a given type's respective multiplier number
+	 * @param type int of given type
+	 * @return number of multipliers recieved
+	 */
 	public int getMultiplierByType(int type){
 		if(type > specialCount.length || type < 1){
 			System.out.println("Error: Invalid Type Input");
 		}
 		return specialCount[type-1];
 	}
-	
+	/**
+	 * Set a given type's multiplier. Method should only be used for 
+	 * testing purposes.
+	 * @param type Given type to set multiplier.
+	 * @param newVal New Value for the type's multiplier
+	 */
 	public void setMultiplierByType(int type, int newVal){
 		if(type > specialCount.length || type < 1){
 			System.out.println("Error: Invalid Type Input");
 		}
 		specialCount[type-1] = newVal;
 	}
-	
 	/**
 	 * Calculates values of upper score card first, then lower score card
 	 * combos.
@@ -167,7 +173,7 @@ public class Score {
 		boolean other = Combo.othersFound(hand.getRolls());
 		boolean dragons = Combo.dragonsFound(hand.getRolls());
 		
-//		// Assign relevant values to Hashtable
+		// Assign relevant values to Hashtable
 		if(maxOfKind >= 3) scores.put(lowerScoreTypes[0], dieTotal); // 3 of a kind
 		if(maxOfKind >= 4) scores.put(lowerScoreTypes[1], dieTotal); // 4 of a kind
 		if(fullHouse) scores.put(lowerScoreTypes[2], FULL_HOUSE); // full house
@@ -181,8 +187,9 @@ public class Score {
 		if(maxOfKind >= 7) scores.put(lowerScoreTypes[10], YAHTZEE); // yahtzee
 	}
 	
-	
-	// return string of dictionary keys and values
+	/**
+	 * return string of dictionary keys and values
+	 */
 	public String toString(){
 		StringBuffer b = new StringBuffer();
 		for(int i=1; i<=hand.getDieSides(); i++){

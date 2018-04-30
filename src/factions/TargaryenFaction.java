@@ -15,7 +15,10 @@ import gameRunner.Player;
  * @version v1.0  4/29/2018
  */
 public class TargaryenFaction extends BaseFaction {
-
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public TargaryenFaction(Player p) {
 		super(p);
 		message = "If you roll Drogon, all of your current multipliers double!";
@@ -27,7 +30,9 @@ public class TargaryenFaction extends BaseFaction {
 			}
 		};
 	}
-
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.TARGARYEN;
 	}

@@ -15,6 +15,10 @@ import gameRunner.Player;
  * @version v1.0  4/29/2018
  */
 public class BaratheonFaction extends BaseFaction {
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public BaratheonFaction(Player p) {
 		super(p);
 		message = "If you roll 3 Kingsgaurd Knights, add 10 pts to this hand's Score!";
@@ -22,11 +26,17 @@ public class BaratheonFaction extends BaseFaction {
 		exec = () -> p.setBonusPoints(10);
 	}
 	
+	/**
+	 * resets faction special roll
+	 */
 	public void resetFaction(){
 		super.resetFaction();
 		p.setBonusPoints(0);
 	}
 
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.BARATHEON;
 	}

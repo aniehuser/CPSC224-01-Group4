@@ -17,7 +17,10 @@ import gameRunner.Player;
  * @version v1.0  4/29/2018
  */
 public class LannistersFaction extends BaseFaction {
-
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public LannistersFaction(Player p){
 		super(p);
 		message = "If you roll Jaime Lannister AND Cersei Lannister, change all\n" +
@@ -32,7 +35,9 @@ public class LannistersFaction extends BaseFaction {
 			}
 		};
 	}
-
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.LANNISTERS;
 	}

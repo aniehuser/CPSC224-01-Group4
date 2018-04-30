@@ -1,12 +1,18 @@
 package gameRunner;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import factions.*;
-//comment
+
+
 /**
+ * Class represents a player in the Game, contains all high level logic for
+ * performing a round and setting a score.
+ * 
+ * CPSC 224-01 Spring 2018
+ * Final Project
  * 
  * @author Anthony Niehuser
+ * 
  * @version 2.0
  */
 public class Player {
@@ -33,6 +39,8 @@ public class Player {
 	 * @param sides sides of dice
 	 * @param die number of die
 	 * @param rolls rolls per round
+	 * @param name Set a player's name
+	 * @param faction Specify this player's faction
 	 */
 	public Player(int sides, int die, int rolls, String name, Faction faction){
 		this.rounds = 0;
@@ -47,45 +55,45 @@ public class Player {
 		this.name = name;
 		this.faction = initFaction(faction);
 	}
+	/**
+	 * Get a faction class from inputted enum
+	 * @param f enum with with given faction 
+	 * @return Class of type specified by faction
+	 */
 	public BaseFaction initFaction(Faction f){
 		switch(f){
-		case STARKS:
-			return new StarksFaction(this);
-		case LANNISTERS:
-			return new LannistersFaction(this);
-		case TARGARYEN:
-			return new TargaryenFaction(this);
-		case WHITE_WALKERS:
-			return new WhiteWalkersFaction(this);
-		case BARATHEON:
-			return new BaratheonFaction(this);
-		case GREYJOYS:
-			return new GreyJoysFaction(this);
-		case CHILDREN_OF_THE_FOREST:
-			return new ChildrenOfTheForestFaction(this);
+		case STARKS:return new StarksFaction(this);
+		case LANNISTERS:return new LannistersFaction(this);
+		case TARGARYEN:return new TargaryenFaction(this);
+		case WHITE_WALKERS:return new WhiteWalkersFaction(this);
+		case BARATHEON:return new BaratheonFaction(this);
+		case GREYJOYS:return new GreyJoysFaction(this);
+		case CHILDREN_OF_THE_FOREST:return new ChildrenOfTheForestFaction(this);
 		default:
 			System.out.println("Faction not yet implemented");
 			return new StarksFaction(this);
 		}
 	}
 	/**
-	 * CARL DO NOT USE THIS METHOD
+	 * * CARL DO NOT USE THIS METHOD
+	 * Increments a players max number of rolls for a given hand.
+	 * Only to be used
 	 */
 	public void incrementMaxRolls(){
 		maxRolls++;
 		hand.incrementMaxRolls();
 	}
 	/**
-	 * CARL DO NOT USE THIS METHOD
+	 * Get players Faction
+	 * @return Faction class
 	 */
-	public void incrementMaxRounds(){
-		maxRounds++;
-	}
-	
 	public BaseFaction getFaction(){
 		return faction;
 	}
-	
+	/**
+	 * Method used at the start of the round. Creates a new Hand and rolls all
+	 * die.
+	 */
 	public void rollInit(){
 		rolls = 0;
 		hand = new Hand(sides, die, maxRolls);
@@ -96,81 +104,151 @@ public class Player {
 		}
 		rolls++;
 	}
+	/**
+	 * Method use to perform every subsequent roll after rollInit(). Hand will not
+	 * reroll after a round or a game is over. If all die are kept, sets round  to be over.
+	 * @param keep boolean array that specifies which die to keep by index. True elements are
+	 * kept, false elements are rerolled.
+	 */
 	public void rollOnce(boolean[] keep){
+		// check for bad input
 		if(keep.length != die){
 			System.out.println("Roll Error: Bad input length");
 			return;
 		}
+		// check that the game is not over
 		if(isPlayerTurnsOver()){
 			System.out.println("Roll Error: Too many rounds");
 			return;
 		}
+		// check if round is over
 		if(isRoundOver()){
 			System.out.println("Roll Error: Too many rolls");
 			return;
 		}
-		
+		// if all die kept, end round
 		if(isAllTrue(keep)){
 			System.out.println("Keep all die, end round");
 			rolls = maxRolls-1;
+		// else, shuffle
 		} else if(!hand.shuffle(keep)){
 			System.out.print("Roll Error: ");
 			return;
 		}
+		
+		// increment rounds
 		rolls++;
 	
+		// execute specialHand if hand meets special conditions
 		if(faction.isSpecialHand()){
 			faction.executeSpecial();
 		}
 		
+		// calculate the score if round is over
 		if(isRoundOver()){
 			scorer.calculateScore(hand);
 			rounds++;
 		}
-		
 	}
+	/**
+	 * Get Score class containing all possible scores for a given hand.
+	 * @return Score class
+	 */
 	public Score getScorer(){
 		return scorer;
 	}
+	/**
+	 * Get a Players score by key value. Available keys are as follows:
+	 * "1", "2", "3", "4"", "5", "6", "7", "Upper Total", "3 of a Kind",
+	 * "4 of a Kind", "Full House", "The North", "The South", "Easteros",
+	 * "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee", "Lower Total", 
+	 * "Grand Total"
+	 * @param key String key value
+	 * @return int value of score. Empty score is -1
+	 */
 	public int getPlayerScoreByKey(String key){
 		return scorecard.get(key);
 	}
-
+	/**
+	 * Getter for entire Scorecard Hashtable
+	 * @return Hashtable of current scores
+	 */
 	public Hashtable<String, Integer> getScoreCard(){
 		return scorecard;
 	}
+	/**
+	 * Getter for current Hand class
+	 * @return Hand object
+	 */
 	public Hand getHand(){
 		return hand;
 	}
+	/**
+	 * Getter for current player die values
+	 * @return Array of Die
+	 */
 	public Die[] getDie(){
 		return hand.getRolls();
 	}
+	/**
+	 * Getter for current number of rolls
+	 * @return int value for rolls
+	 */
 	public int getRolls(){
 		return rolls;
 	}
+	/**
+	 * Getter for max number of rolls
+	 * @return int value for maxRolls
+	 */
 	public int getMaxRolls(){
 		return maxRolls;
 	}
+	/**
+	 * Set a score from the scorer and add it to the player's current score. 
+	 * Scores are automatically calculated at the end of a round, and cannot be
+	 * set to the scorecard until a round is over.
+	 * Key values are as follows: "1", "2", "3", "4"", "5", "6", "7",
+	 * "3 of a Kind", "4 of a Kind", "Full House", "The North", "The South",
+	 * "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee"
+	 * @param key String value of key to set to 
+	 */
 	public void setScore(String key){
+		// only set scores while round is over.
 		if(!isRoundOver()){
 			System.out.println("Score Error: Cannot score until round is over");
 			return;
 		}
+		// cannot set a score that is already set
 		if(!isScoreSet(key)){
 			scorecard.put(key, bonusPoints + scorecard.get(key) + scorer.getScore(key));
 			System.out.println("Score Error: Score has already been set");
 		} else{
 			scorecard.put(key, bonusPoints + scorer.getScore(key));
 		}
+		// calculate the player's current multiplier
 		calculateTotals();
+		
+		// reset the round
 		faction.resetFaction();
 		rolls = 0;
 	}
+	/**
+	 * Check if a given score is set. 
+	 * @param key String of key value. keys are as follows: "1", "2", "3", "4"", "5", "6", "7",
+	 * "3 of a Kind", "4 of a Kind", "Full House", "The North", "The South",
+	 * "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee"
+	 * @return True if score has been set, false otherwise
+	 */
 	public boolean isScoreSet(String key){
 		StringContainer inStr = new StringContainer(key);
 		return InputHandler.scoreToKeep(inStr, scorecard);
 	}
-
+	/**
+	 * Determines if all elements in an array are true
+	 * @param array to check if all elements are true.
+	 * @return True if all elements are true, false otherwise
+	 */
 	private boolean isAllTrue(boolean[] array){
 		boolean yes = true;
 		for(int i=0; i<array.length; i++){
@@ -242,30 +320,45 @@ public class Player {
 	}
 	/**
 	 * DO NOT USE
-	 * @param a
+	 * method used to set bonus points to add to a total rounds score. 
+	 * This method is only intended to be used for special rolls and is
+	 * handled in BaseFaction classes
+	 * @param a points to add
 	 */
 	public void setBonusPoints(int a){
 		bonusPoints = a;
 	}
 	/**
-	 * return string representation of current score card
+	 * Check if round is over.
+	 * @return true if round over, false otherwise
 	 */
 	public boolean isRoundOver(){
 		return rolls == maxRolls;
 	}
-	
+	/**
+	 * Check if a player has used all his/her turns
+	 * @return return true if all turns have occurred, false otherwise
+	 */
 	public boolean isPlayerTurnsOver(){
 		return rounds == maxRounds;
 	}
-
+	/**
+	 * Getter for a player's name
+	 * @return String value of player name
+	 */
     public String getName() {
         return name;
     }
-
+    /**
+     * Setter for a Player's name.
+     * @param name String value of name to set. 
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+	 * return string representation of current score card
+	 */
     public String toString(){
 		StringBuffer b = new StringBuffer();
 		b.append("Current Score Card:\n");

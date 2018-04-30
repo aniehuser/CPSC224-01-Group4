@@ -11,7 +11,7 @@ import java.util.Hashtable;
  * 
  * @author Anthony Niehuser
  * 
- * @version v1.1 3/19/2018
+ * @version v1.2 4/29/2018
  */
 public class Combo {
 	/**
@@ -33,33 +33,78 @@ public class Combo {
 		}
 		return max;
 	}
-	
+	/**
+	 * Returns the number of rare die by a given type.
+	 * @param rolls	Array of Die class
+	 * @param type the type for which to find the number of rare rolls
+	 * @return integer of number of rare's of given type
+	 */
 	public static int numSpecialsByType(Die[] rolls, int type){
 		Hashtable<Integer,Integer> specs = getSpecialDieCounts(rolls);
 		return (specs.containsKey(type)) ? specs.get(type) : 0;
 	}
+	/**
+	 * Determines if 5 dice of type 1 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 1 are in the hand, false otherwise
+	 */
 	public static boolean northFound(Die[] rolls){
 		return maxOfGivenKindFound(1, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 2 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 2 are in the hand, false otherwise
+	 */
 	public static boolean southFound(Die[] rolls){
 		return maxOfGivenKindFound(2, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 3 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 3 are in the hand, false otherwise
+	 */
 	public static boolean easterosFound(Die[] rolls){
 		return maxOfGivenKindFound(3, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 4 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 4 are in the hand, false otherwise
+	 */
 	public static boolean deadFound(Die[] rolls){
 		return maxOfGivenKindFound(4, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 5 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 5 are in the hand, false otherwise
+	 */
 	public static boolean crownFound(Die[] rolls){
 		return maxOfGivenKindFound(5, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 6 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 6 are in the hand, false otherwise
+	 */
 	public static boolean othersFound(Die[] rolls){
 		return maxOfGivenKindFound(6, rolls) >= 5;
 	}
+	/**
+	 * Determines if 5 dice of type 7 are in the hand.
+	 * @param rolls the given hand
+	 * @return true if 5 of type 7 are in the hand, false otherwise
+	 */
 	public static boolean dragonsFound(Die[] rolls){
 		return maxOfGivenKindFound(7, rolls) >= 5;
 	}
-	
+	/**
+	 * Determines number of a given type in the hand. 
+	 * @param type the type of die to find in the hand.
+	 * @param rolls rolls of the given hand.
+	 * @return int of number of type in hand. 
+	 */
 	public static int maxOfGivenKindFound(int type, Die[] rolls){
 		Hashtable<Integer,Integer> counts = getDieCounts(rolls);
 		return counts.containsKey(type) ? counts.get(type) : 0;
@@ -132,7 +177,11 @@ public class Combo {
 		}
 		return counts;
 	}
-	
+	/**
+	 * Find number of all rare dice by type
+	 * @param rolls the given hand
+	 * @return A Hashtable with the number of rare rolls by type
+	 */
 	private static Hashtable<Integer, Integer> getSpecialDieCounts(Die[] rolls){
 		Hashtable<Integer,Integer> counts = new Hashtable<Integer,Integer>();
 		for(int i=0; i<rolls.length; i++){

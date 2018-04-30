@@ -18,7 +18,10 @@ import gameRunner.Die;
  * @version v1.0  4/29/2018
  */
 public class WhiteWalkersFaction extends BaseFaction {
-
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public WhiteWalkersFaction(Player p) {
 		super(p);
 		message = "If you roll the Night King, all Night's Watch rangers become Undead!\n" + 
@@ -32,7 +35,9 @@ public class WhiteWalkersFaction extends BaseFaction {
 			}
 		};
 	}
-
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.WHITE_WALKERS;
 	}

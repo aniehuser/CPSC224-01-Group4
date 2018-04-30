@@ -18,6 +18,10 @@ import gameRunner.Die;
  * @version v1.0  4/29/2018
  */
 public class GreyJoysFaction extends BaseFaction {
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public GreyJoysFaction(Player p) {
 		super(p);
 		message = "Roll 2 Arya Starks and all Faceless Men are now worth 6 points!";
@@ -30,7 +34,10 @@ public class GreyJoysFaction extends BaseFaction {
 			}
 		};
 	}
-
+	
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.GREYJOYS;
 	}

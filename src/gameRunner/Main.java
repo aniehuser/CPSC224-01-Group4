@@ -1,22 +1,19 @@
 package gameRunner;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import factions.*;
-//import hw5.Hand;
 
 /**
- * This program performs basic rolling and score calculating in
- * the board game, Yahtzee. It is intended to emulate a c++
- * version of the game provided by the instructor.
+ * Entry point. This class was primarily used to test backend functionality and to
+ * give example of backend logic.
  * 
  * CPSC 224-01, Spring 2018
- * Programming Assignment #6
+ * Final Project
  * 
  * @author Anthony Niehuser
  * 
- * @version v1.1 3/19/2018
+ * @version v2.0 4/29/2018
  */
 public class Main {
 	public static final Scanner in = new Scanner(System.in); //terminal input object

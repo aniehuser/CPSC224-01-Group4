@@ -18,9 +18,10 @@ public enum Faction {
 	BARATHEON,
 	GREYJOYS,
 	CHILDREN_OF_THE_FOREST;
-
-
-	@Override
+	
+	/**
+	 * To string for enum
+	 */
 	public String toString() {
 		switch(this) {
 			case STARKS: return "Starks";

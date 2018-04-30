@@ -17,6 +17,10 @@ import gameRunner.Combo;
  * @version v1.0  4/29/2018
  */
 public class StarksFaction extends BaseFaction {
+	/**
+	 * Base constructor, sets condition, message, and exec for BaseFaction
+	 * @param p reference to player associated with faction
+	 */
 	public StarksFaction(Player p){
 		super(p);
 		message = "If you roll Jon Snow, you will recieve an extra roll!\n" + 
@@ -24,7 +28,9 @@ public class StarksFaction extends BaseFaction {
 		condition = () -> Boolean.valueOf(Combo.numSpecialsByType(p.getDie(), 1) >= 1);
 		exec = () -> p.incrementMaxRolls();
 	}
-
+	/**
+	 * Getter for associated faction enum
+	 */
 	public Faction getFactionType(){
 		return Faction.STARKS;
 	}

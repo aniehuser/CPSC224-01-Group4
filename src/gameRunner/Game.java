@@ -11,11 +11,11 @@ import java.util.Scanner;
  * stores values to be used in game
  * 
  * CPSC 224-01, Spring 2018
- * Programming Assignment #6
+ * Final Project
  * 
  * @author Anthony Niehuser
  * 
- * @version v1.0 3/21/2018
+ * @version v1.1 4/29/2018
  */
 public class Game {
 	// Minimum values for sides, die, and rolls
@@ -142,6 +142,7 @@ public class Game {
 	}
 	/**
 	 * Update game parmaeters from user input
+	 * @deprecated
 	 */
 	public void update(){
 		// check if object is valid before updating
