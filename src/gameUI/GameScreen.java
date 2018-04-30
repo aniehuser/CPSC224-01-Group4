@@ -320,7 +320,6 @@ public class GameScreen {
                 if (currentPlayerTracker > maxPlayers) {
                     //start of new round
                     currentPlayerTracker = 0;
-                    currentRolls = 1;
                     game.incrementRound();
                     if (!game.isGameOver()) {
                         WinnerScreen winnerScreen = new WinnerScreen();
@@ -328,6 +327,7 @@ public class GameScreen {
                     }
                 }
 
+                currentRolls = 1;
                 resetButtons();
                 currentPlayer = players.get(currentPlayerTracker);
                 currentPlayer.rollInit();
