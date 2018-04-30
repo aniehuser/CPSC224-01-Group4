@@ -24,7 +24,8 @@ public class Game {
 	public final int MIN_ROLLS = 2;
 	
 	// path to config file in project
-	private final String config = "yahtzeeConfig.txt";
+	private final String path = System.getProperty("user.dir") + "/";
+	private final String config = path + "yahtzeeConfig.txt";
 	
 	private Scanner file = null;
 
@@ -42,6 +43,13 @@ public class Game {
 	public Game(){
 		validInstance = false;
 		updatedConfig = false;
+		try {
+			System.out.println(new java.io.File(".").getCanonicalPath());
+			System.out.println(System.getProperty("user.dir"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	/**
 	 * Load config file and initialize values to member variables 

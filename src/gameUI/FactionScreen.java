@@ -22,7 +22,8 @@ import javafx.stage.Stage;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
-import static gameRunner.Main.game;
+import static gameUI.TitleScreen.game;
+
 
 public class FactionScreen {
 
@@ -42,6 +43,7 @@ public class FactionScreen {
 
     public void start(Stage primaryStage, ArrayList<String> playerNames) {
         primaryStage.setTitle("Game Of Yahtzee - Choose Faction");
+
 
         stage = primaryStage;
         amountOfPlayers = playerNames.size();
@@ -140,7 +142,7 @@ public class FactionScreen {
         root.add(whiteWalker, 2, 5);
 
         //set the scene with root, show the stage
-        primaryStage.setScene(new Scene(root, 1100, 1000, Color.BLACK));
+        primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
     }
@@ -170,8 +172,7 @@ public class FactionScreen {
                 case "stark":
                     factions.add(Faction.STARKS);
                     stark.setEffect(dsWhite);
-                    //stark.setVisible(false);
-                    stark.setMouseTransparent(true);
+                    stark.setVisible(false);
                     break;
                 case "targaryen":
                     factions.add(Faction.TARGARYEN);
@@ -210,12 +211,10 @@ public class FactionScreen {
             System.out.println("Size of names array " + names.size());
 
             if(currentPlayer >= amountOfPlayers){
-                game.start();
                 ArrayList<Player> players = new ArrayList<>();
                 for (int i = 0; i < names.size(); i++) {
                     players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), names.get(i), factions.get(i)));
                 }
-                game.end();
                 GameScreen gameScreen = new GameScreen();
                 gameScreen.start(stage, players);
             }

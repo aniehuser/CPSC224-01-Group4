@@ -1,6 +1,11 @@
 package gameRunner;
 
+import gameUI.TitleScreen;
+
 import java.util.Hashtable;
+import java.util.Scanner;
+
+import static gameUI.TitleScreen.game;
 
 /**
  * Class of static methods that return true for valid command line input
@@ -27,7 +32,7 @@ public class InputHandler {
 	 */
 	public static boolean dieToKeep(StringContainer value){
 		prompt = "Input y/n to keep or reroll a die";
-		reg = "[ynYN]{" + Main.game.getDieNum()+ "}";
+		reg = "[ynYN]{" + game.getDieNum()+ "}";
 		inString = value;
 		return handler();
 	}
@@ -72,8 +77,8 @@ public class InputHandler {
 		}
 		//second test for appropriate value
 		int sides = Integer.parseInt(value.getString());
-		if(sides < Main.game.MIN_SIDES){
-			System.out.println("Must have at least " + Main.game.MIN_SIDES + " number of sides");
+		if(sides < TitleScreen.game.MIN_SIDES){
+			System.out.println("Must have at least " + TitleScreen.game.MIN_SIDES + " number of sides");
 			return false;
 		}
 		return true;
@@ -96,8 +101,8 @@ public class InputHandler {
 		}
 		//second test for appropriate value
 		int die = Integer.parseInt(value.getString());
-		if(die < Main.game.MIN_DIE){
-			System.out.println("Must have at least " + Main.game.MIN_DIE + " number of die");
+		if(die < TitleScreen.game.MIN_DIE){
+			System.out.println("Must have at least " + TitleScreen.game.MIN_DIE + " number of die");
 			return false;
 		}
 		return true;
@@ -119,8 +124,8 @@ public class InputHandler {
 		}
 		//second test for appropriate value
 		int rolls = Integer.parseInt(value.getString());
-		if(rolls < Main.game.MIN_ROLLS){
-			System.out.println("Must have at least " + Main.game.MIN_ROLLS + " rolls per hand");
+		if(rolls < TitleScreen.game.MIN_ROLLS){
+			System.out.println("Must have at least " + TitleScreen.game.MIN_ROLLS + " rolls per hand");
 			return false;
 		}
 		return true;
@@ -150,7 +155,8 @@ public class InputHandler {
 	private static boolean handler(){
 		//get input
 		System.out.println(prompt);
-		inString.setString(Main.in.nextLine());
+		Scanner scanner = new Scanner(System.in);
+		inString.setString(scanner.nextLine());
 		
 		//test regex
 		if(!inString.getString().matches(reg)){
