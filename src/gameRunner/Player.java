@@ -124,13 +124,16 @@ public class Player {
 		}
 		
 		if(isRoundOver()){
-			scorer.calculateScore(hand);
+			scorer.calculateScore(hand.clone());
 			rounds++;
 		}
 		
 	}
 	public Score getScorer(){
 		return scorer;
+	}
+	public int getPlayerScoreByKey(String key){
+		return scorecard.get(key);
 	}
 
 	public Hashtable<String, Integer> getScoreCard(){
