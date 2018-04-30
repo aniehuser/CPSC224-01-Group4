@@ -105,7 +105,7 @@ public class WinnerScreen {
         int i = 1;
         for (Player player :players) {
             //Text text = new Text(player.getScorer().toString());
-            Text text = new Text(i + ". " +player.getName() + " scored " + (Integer.toString(player.getScorer().totalAllDice())) + " points.");
+            Text text = new Text(i + ". " +player.getName() + " scored " + (Integer.toString(player.getScorer().totalAllDice()) + " points."));
             if (wf == Faction.GREYJOYS || wf == Faction.CHILDREN_OF_THE_FOREST) {
                 text.setFill(Color.BLACK);
             } else {
