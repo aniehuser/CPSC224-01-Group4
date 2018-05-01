@@ -156,6 +156,7 @@ public class GameScreen {
      */
     private void gameDisplayController() {
         scoreListButtons.clear();
+        factionBonus.setText(currentPlayer.getFaction().specialInstructions());
         int i = 0;
 
         //display currentPlayer
@@ -281,11 +282,11 @@ public class GameScreen {
     private void generateScorecard() {
         //score labels are the keys to access the proper lines in our score object
         String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "3 of a Kind", "4 of a Kind", "Full House", "The North",
-                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons"};
+                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee"};
 
         //iterate through each line and add a message to the button representing it how many points that line is worth
         //set id to be the string representing the line the user selected
-        for (int i = 0; i < scoreLabels.length - 1; i++) {
+        for (int i = 0; i < scoreLabels.length; i++) {
             if (currentPlayer.isScoreSet((scoreLabels[i]))) {
                 Button button = new Button(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 button.setOnAction(new ScoreActionListener());

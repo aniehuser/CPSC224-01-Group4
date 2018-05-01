@@ -78,6 +78,7 @@ public class WinnerScreen {
         viewScores.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                viewScores.setVisible(false);
                 displayScores(root, players);
             }
         });
@@ -106,9 +107,9 @@ public class WinnerScreen {
         VBox vbox = new VBox();
         int i = 1;
         for (Player player :players) {
-            vbox.getChildren().add(new Text(player.toString()));
-            //Text text = new Text(player.getScorer().toString());
-            Text text = new Text(i + ". " +player.getName() + " scored " + (Integer.toString(player.getScorer().totalAllDice())) + " points.");
+//            vbox.getChildren().add(new Text(player.toString()));
+//            Text text = new Text(player.getScorer().toString());
+            Text text = new Text(i + ". " +player.getName() + " scored " + (player.getPlayerScoreByKey("Grand Total") + " points."));
             if (wf == Faction.GREYJOYS || wf == Faction.CHILDREN_OF_THE_FOREST) {
                 text.setFill(Color.BLACK);
             } else {
