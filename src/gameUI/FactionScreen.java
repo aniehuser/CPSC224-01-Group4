@@ -149,7 +149,7 @@ public class FactionScreen {
 
     //TODO: change the which player's choice it is
     public class ButtonHandler implements EventHandler {
-        DropShadow dsWhite;
+        private DropShadow dsWhite;
         public ButtonHandler() {
             dsWhite = new DropShadow();
             dsWhite.setOffsetY(2.5f);

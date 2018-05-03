@@ -34,7 +34,7 @@ public class GameScreen {
     private Text factionBonus; //Display's the hand's current score
     private GridPane playerDiceButtons; //container for toggleButtons that allow user to select which dice they want to keep or reroll
 
-    Button roll; //button to allow a player to roll
+    private Button roll; //button to allow a player to roll
 
     private ListView<Button> scoreListView; //creates a listview for displaying the possible avenues of score
     private ObservableList<Button> scoreListButtons = //creates a button array to attach to the listview

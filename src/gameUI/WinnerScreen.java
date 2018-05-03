@@ -24,9 +24,9 @@ import static gameUI.TitleScreen.game;
 
 public class WinnerScreen {
 
-    Faction wf;
-    HBox hbox;
-    StackPane root;
+    private Faction wf;
+    private HBox hbox;
+    private StackPane root;
 
     public void start(Stage primaryStage, ArrayList<Player> players) {
         primaryStage.setTitle("Game of Yahtzee - Game Over");

@@ -29,8 +29,8 @@ public class PlayersScreen {
     private Button btn2 = new Button("2");
     private Button btn3 = new Button("3");
     private Button btn4 = new Button("4");
-    StackPane root = new StackPane();
-    DropShadow ds = new DropShadow();
+    private StackPane root = new StackPane();
+    private DropShadow ds = new DropShadow();
 
     public void start(Stage primaryStage){
         primaryStage.setTitle("Game Of Yahtzee - Choose Players");
@@ -92,11 +92,11 @@ public class PlayersScreen {
      to say "Enter Names" and has textFields for each name required.
      When they are done entering names they can press the done button.
      */
-    public class ButtonHandler implements EventHandler<ActionEvent> {
+    private class ButtonHandler implements EventHandler<ActionEvent> {
 
         private int numOfNames;
-        Button enterButton;
-        Stage primaryStage;
+        private Button enterButton;
+        private Stage primaryStage;
 
         public ButtonHandler(int numOfNames, Stage primaryStage) {
             this.numOfNames = numOfNames;
@@ -145,7 +145,6 @@ public class PlayersScreen {
 
             root.getChildren().add(enterButton);
 
-            //TODO: handle input, go to pick faction screen
         }
     }
 }
