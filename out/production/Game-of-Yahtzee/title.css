@@ -141,7 +141,7 @@
   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
 }
 .toggle-button6:selected {
-  -fx-graphic: url("res/white-walker-5.png");
+  -fx-graphic: url("res/white-walkers-5.png");
   -fx-border-color:lime;
   -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
 }
