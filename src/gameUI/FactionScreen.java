@@ -2,12 +2,10 @@ package gameUI;
 
 import factions.Faction;
 import gameRunner.Player;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -19,12 +17,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
 import static gameUI.TitleScreen.game;
 
-
+/**
+ * Class to attach and simulate faction picking for player's
+ * Once factions are picked game loop is started
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Nicole Howard
+ *
+ * @version v1 5/4/18
+ */
 public class FactionScreen {
 
     private final Button stark = new Button();

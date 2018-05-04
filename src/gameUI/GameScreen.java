@@ -26,7 +26,16 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 import static gameUI.TitleScreen.game;
-
+/**
+ * Class to attach backend game logic to a ui in order to simulate a game
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1 5/4/18
+ */
 public class GameScreen {
 
     //Display fields:
@@ -92,7 +101,7 @@ public class GameScreen {
             @Override
             public void handle(ActionEvent event) {
                 if (currentPlayer != null) {
-                    if(!currentPlayer.isRoundOver() && currentRolls < maxRolls) {
+                    if(!currentPlayer.isRoundOver()) {
                         playerRoll();
                     }
                 }
@@ -155,7 +164,9 @@ public class GameScreen {
      * initailizes the views for a player
      */
     private void gameDisplayController() {
+        //clear the controller for our listView of scoreline buttons
         scoreListButtons.clear();
+        //set the faction bonus instructions to the current faction
         factionBonus.setText(currentPlayer.getFaction().specialInstructions());
         int i = 0;
 
@@ -251,7 +262,7 @@ public class GameScreen {
             }
             i++;
         }
-        currentRolls++;
+
         //clears the toggles on our toggle buttons
         resetButtons();
         //roll the selected dice and generate new buttons to display the score
@@ -267,9 +278,12 @@ public class GameScreen {
     private void resetButtons() {
         for (Node node : playerDiceButtons.getChildren()) {
             ToggleButton playerButton = (ToggleButton) node;
+            //if a button is selected set it to be unselected
             if (playerButton.isSelected()) {
                 playerButton.setSelected(false);
             }
+
+            //clear the current styling of the buttons
             playerButton.getStyleClass().clear();
             playerButton.setText(null);
         }
@@ -300,10 +314,16 @@ public class GameScreen {
      * custom listener to handle our scoreline events
      */
     private class ScoreActionListener implements EventHandler<ActionEvent> {
+        /**
+         * handle
+         * @params  event
+         *
+         * */
         public void handle(ActionEvent event) {
+            //grab the button that was pressed from the event object
             Button pressedLine = (Button) event.getSource();
-            System.out.println("before " + currentPlayer.isScoreSet(pressedLine.getId()));
 
+            //make sure the player's turn is over
             if(!currentPlayer.isPlayerTurnsOver()) {
                 boolean[] choice = new boolean[game.getDieNum()];
                 for (int i = 0; i < choice.length - 1; i++) {
@@ -311,10 +331,11 @@ public class GameScreen {
                 }
                 currentPlayer.rollOnce(choice);
             }
+
+            //check to see if the score has already been set
             if (currentPlayer.isScoreSet(pressedLine.getId())) {
                 // set the player's score by inputting the string key of what the user chose
                 currentPlayer.setScore(pressedLine.getId());
-                System.out.println("after " + currentPlayer.isScoreSet(pressedLine.getId()));
                 currentPlayerTracker++; //increment to next player
 
                 //all players played a round increment game round
@@ -328,15 +349,15 @@ public class GameScreen {
                     }
                 }
 
-                currentRolls = 1;
+                //reset the toggle buttons
                 resetButtons();
                 currentPlayer = players.get(currentPlayerTracker);
                 currentPlayer.rollInit();
             }
+
+            //create the new player's ui
             generateScorecard();
             gameDisplayController();
-            System.out.println("Current round: " + game.getCurrentRound());
-            System.out.println("Max round" + game.getMaxRounds());
         }
     }
 }

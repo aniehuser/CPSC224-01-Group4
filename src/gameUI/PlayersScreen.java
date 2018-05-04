@@ -17,9 +17,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
-//TODO: button styling (Nicole)
-
-//TODO: handle input for names, go to pick faction screen (Carl)
+/**
+ * Class to attach backend name picking logic to a ui
+ * it will then start the faction picking portion and player's name with the input it has recieved
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1 5/4/18
+ */
 
 public class PlayersScreen {
 
