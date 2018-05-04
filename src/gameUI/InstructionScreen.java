@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-//TODO: Format the dice in instructions string
 public class InstructionScreen {
     /**
      * start a screen reflecting our instructions screen
@@ -33,13 +32,6 @@ public class InstructionScreen {
         String dice4 = String.format("%-28s %s" , "Wildfire" , "-- Cersei, 1% chance.\n" );
         String dice5 = String.format("%-24s %s" , "White Walker" , "-- The Night King, .75% chance.\n" );
         String dice6 = String.format("%-26s %s" , "Drogon" , "-- Drogon, .5% chance.\n" );
-        System.out.println(dice);
-        System.out.println(dice1);
-        System.out.println(dice2);
-        System.out.println(dice3);
-        System.out.println(dice4);
-        System.out.println(dice5);
-        System.out.println(dice6);
 
         final String instructions = "How To Win:\n" + "Players pick a faction to " +
                 "belong to and fight the others by rolling the dice to become the ruling faction\n" +
@@ -105,7 +97,12 @@ public class InstructionScreen {
         root.getStylesheets().add("title.css");
         primaryStage.show();
 
-        //Next-Back button changes the text from instructions to scoring
+        /**
+         * Anonymous inner class will switch the instruction
+         * based on the button pressed next or back
+         * @return nothing
+         * @param EventHandler class that overrides handle()
+         */
         final Button nextButton = (Button) scene.lookup("#nextButton");
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -123,8 +120,12 @@ public class InstructionScreen {
 
         //play button goes back to the title screen
         Button playButton = (Button) scene.lookup("#playButton");
-        //playButton.getStyleClass().add("rich-blue");
         playButton.setText("Title Screen");
+        /**
+         * Anonymous inner class will go back to the title screen
+         * @return nothing
+         * @param EventHandler class that overrides handle()
+         */
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

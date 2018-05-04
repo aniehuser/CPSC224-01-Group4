@@ -24,7 +24,11 @@ import java.util.ArrayList;
 
 import static gameUI.TitleScreen.game;
 
-
+/**
+ * Faction Screen class sets the primaryScene to a
+ * new scene in which the players can choose their
+ * factions.
+ */
 public class FactionScreen {
 
     private final Button stark = new Button();
@@ -41,6 +45,15 @@ public class FactionScreen {
     private ArrayList<String> names;
     private ArrayList<Faction> factions;
 
+    /**
+     * Instantiate our Pane and Scene and children
+     * nodes to a UI in which the player can choose
+     * their faction
+     * @return nothing
+     * @param primaryStage the stage that we want to change
+     * @param playerNames an ArrayList of the names of each player
+     *
+     */
     public void start(Stage primaryStage, ArrayList<String> playerNames) {
         primaryStage.setTitle("Game Of Yahtzee - Choose Faction");
 
@@ -71,7 +84,6 @@ public class FactionScreen {
         root.add(imageView, 0, 1);
 
         //Text area to state whose turn it is to pick their faction
-        //TODO: get current player's name and add it to text
         playerName = new Text(playerNames.get(0));
         playerName.setFill(Color.GRAY);
         playerName.setFont(new Font(30));
@@ -147,7 +159,11 @@ public class FactionScreen {
 
     }
 
-    //TODO: change the which player's choice it is
+    /**
+     * Inner class that handles the button presses
+     * of a faction
+     * @return nothing
+     */
     public class ButtonHandler implements EventHandler {
         private DropShadow dsWhite;
         public ButtonHandler() {
@@ -156,6 +172,12 @@ public class FactionScreen {
             dsWhite.setColor(Color.color(1f, 1f, 1f));
         }
 
+        /**
+         * handle method will set the current players faction
+         * and hide the button
+         * @return nothing
+         * @param event, the faction that was selected
+         */
         @Override
         public void handle(Event event) {
             Button button = (Button) event.getSource();
@@ -163,7 +185,6 @@ public class FactionScreen {
             System.out.println(faction);
 
             /*
-
             For if one is clicked we can decide if we want the faction to stay on the screen but
             not be clickable or dissapear.
              */
@@ -210,6 +231,7 @@ public class FactionScreen {
             System.out.println("Max players " + amountOfPlayers);
             System.out.println("Size of names array " + names.size());
 
+            //Set the list of players and go to the game screen to play the game
             if(currentPlayer >= amountOfPlayers){
                 ArrayList<Player> players = new ArrayList<>();
                 for (int i = 0; i < names.size(); i++) {
