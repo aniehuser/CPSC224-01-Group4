@@ -99,10 +99,6 @@ public class TitleScreen extends Application {
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
-                //System.out.println("Hi");
-
                 PlayersScreen playersScreen = new PlayersScreen();
                 playersScreen.start(primaryStage);
             }
@@ -118,14 +114,7 @@ public class TitleScreen extends Application {
             @Override
             public void handle(ActionEvent event) {
                 InstructionScreen instructionScreen = new InstructionScreen();
-                //try {
                 instructionScreen.start(primaryStage);
-                //} catch (IOException e) {
-                //    e.printStackTrace();
-                //}
-                //FactionScreen factionScreen = new FactionScreen();
-                //factionScreen.start(primaryStage);
-
             }
         });
 

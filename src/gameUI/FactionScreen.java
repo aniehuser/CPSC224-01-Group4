@@ -78,7 +78,6 @@ public class FactionScreen {
         root.add(imageView, 0, 1);
 
         //Text area to state whose turn it is to pick their faction
-        //TODO: get current player's name and add it to text
         playerName = new Text(playerNames.get(0));
         playerName.setFill(Color.GRAY);
         playerName.setFont(new Font(30));
@@ -167,7 +166,6 @@ public class FactionScreen {
         public void handle(Event event) {
             Button button = (Button) event.getSource();
             String faction = button.getId();
-            System.out.println(faction);
 
             /*
 
@@ -213,9 +211,6 @@ public class FactionScreen {
                     break;
             }
             currentPlayer++;
-            System.out.println("Current player " + currentPlayer);
-            System.out.println("Max players " + amountOfPlayers);
-            System.out.println("Size of names array " + names.size());
 
             if(currentPlayer >= amountOfPlayers){
                 ArrayList<Player> players = new ArrayList<>();
