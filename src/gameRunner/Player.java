@@ -85,7 +85,7 @@ public class Player {
 	public BaseFaction getFaction(){
 		return faction;
 	}
-	
+
 	public void rollInit(){
 		rolls = 0;
 		hand = new Hand(sides, die, maxRolls);
@@ -247,6 +247,7 @@ public class Player {
 	public void setBonusPoints(int a){
 		bonusPoints = a;
 	}
+	public int getBonusPoints() {return bonusPoints; }
 	/**
 	 * return string representation of current score card
 	 */
