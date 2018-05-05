@@ -12,7 +12,7 @@ import java.util.Random;
  * 
  * @version v1.1 3/19/2018
  */
-public class Hand implements Cloneable {
+public class Hand implements Cloneable, Comparable<Hand> {
 	private final Random gen = new Random();
 	private final int specialOdds[] = {500, 400, 300, 200, 100, 75, 50};
 	private final int specialRange = 10000;
@@ -167,6 +167,17 @@ public class Hand implements Cloneable {
 			buffer.append(rolls[i].getType() + " " + rolls[i].isSpecial() + "  ");
 		}
 		return buffer.toString();
+	}
+
+	@Override
+	public int compareTo(Hand o) {
+		if(this.dieSides == o.dieSides && this.getRollNum() == o.getRollNum() && this.getRolls() == o.getRolls()){
+			return 0;
+		}
+		else if(this.dieSides < o.dieSides || this.getRollNum() < o.getRollNum()){
+			return -1;
+		}
+		return 1;
 	}
 
 	/**
