@@ -79,10 +79,15 @@ public class Player {
 	 * Increments a players max number of rolls for a given hand.
 	 * Only to be used
 	 */
-	public void incrementMaxRolls(){
-		maxRolls++;
-		hand.incrementMaxRolls();
+	public void setMaxRolls(int n){
+		maxRolls = n;
+		hand.setMaxRolls(n);
 	}
+
+	public void setMaxRounds(int n){
+		maxRounds = n;
+	}
+
 	/**
 	 * Get players Faction
 	 * @return Faction class
@@ -90,6 +95,15 @@ public class Player {
 	public BaseFaction getFaction(){
 		return faction;
 	}
+
+	/**
+	 * Getter for current round.
+	 * @return int value of current number of rounds
+	 */
+	public int getRounds(){
+		return rounds;
+	}
+
 	/**
 	 * Method used at the start of the round. Creates a new Hand and rolls all
 	 * die.
@@ -146,7 +160,7 @@ public class Player {
 		
 		// calculate the score if round is over
 		if(isRoundOver()){
-			scorer.calculateScore(hand);
+			scorer.calculateScore(hand.clone());
 			rounds++;
 		}
 	}
@@ -219,8 +233,8 @@ public class Player {
 			System.out.println("Score Error: Cannot score until round is over");
 			return;
 		}
-		// cannot set a score that is already set
-		if(!isScoreSet(key)){
+
+		if(isScoreSet(key)){
 			scorecard.put(key, bonusPoints + scorecard.get(key) + scorer.getScore(key));
 			System.out.println("Score Error: Score has already been set");
 		} else{
@@ -242,7 +256,7 @@ public class Player {
 	 */
 	public boolean isScoreSet(String key){
 		StringContainer inStr = new StringContainer(key);
-		return InputHandler.scoreToKeep(inStr, scorecard);
+		return !InputHandler.scoreToKeep(inStr, scorecard);
 	}
 	/**
 	 * Determines if all elements in an array are true
@@ -328,6 +342,7 @@ public class Player {
 	public void setBonusPoints(int a){
 		bonusPoints = a;
 	}
+	public int getBonusPoints() {return bonusPoints; }
 	/**
 	 * Check if round is over.
 	 * @return true if round over, false otherwise

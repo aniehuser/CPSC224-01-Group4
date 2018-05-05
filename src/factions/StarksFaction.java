@@ -26,7 +26,13 @@ public class StarksFaction extends BaseFaction {
 		message = "If you roll Jon Snow, you will recieve an extra roll!\n" + 
 			      "You can recieve a maximum of one extra roll per round.";
 		condition = () -> Boolean.valueOf(Combo.numSpecialsByType(p.getDie(), 1) >= 1);
-		exec = () -> p.incrementMaxRolls();
+		exec = () -> p.setMaxRolls(4);
+	}
+
+	public void resetFaction(){
+		super.resetFaction();
+		p.setMaxRolls(3);
+
 	}
 	/**
 	 * Getter for associated faction enum

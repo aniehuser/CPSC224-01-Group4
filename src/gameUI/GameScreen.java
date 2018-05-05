@@ -25,6 +25,17 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+import static gameUI.TitleScreen.game;
+/**
+ * Class to attach backend game logic to a ui in order to simulate a game
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1 5/4/18
+ */
 public class GameScreen {
 
     //Display fields:
@@ -32,7 +43,7 @@ public class GameScreen {
     private Text factionBonus; //Display's the hand's current score
     private GridPane playerDiceButtons; //container for toggleButtons that allow user to select which dice they want to keep or reroll
 
-    Button roll; //button to allow a player to roll
+    private Button roll; //button to allow a player to roll
 
     private ListView<Button> scoreListView; //creates a listview for displaying the possible avenues of score
     private ObservableList<Button> scoreListButtons = //creates a button array to attach to the listview
@@ -42,10 +53,11 @@ public class GameScreen {
     private int currentPlayerTracker; //tracks what players have played and who is up next
     private int maxPlayers; //how many players are playing
     private ArrayList<Player> players; //array containing all players
+    private int maxRolls; //max amount of rolls
+    private int currentRolls; //current amount of rolls
 
     private StackPane root = new StackPane();
     private Stage primaryStage;
-    private static final Game game = new Game(); //container for game logic
 
     /**
      * @params stage currently being used and an array of player names
@@ -60,10 +72,8 @@ public class GameScreen {
         playerText = new Text(players.get(0).getName() + "'s turn");
         playerDiceButtons = new GridPane();
 
-        //initialize game variables and logic
-        game.start();
         //if problem starting game, ends program
-        if (!game.isValidInstance()) {
+        if (!TitleScreen.game.isValidInstance()) {
             System.exit(0);
         }
         currentPlayerTracker = 0;
@@ -76,6 +86,8 @@ public class GameScreen {
         //intialize the current player
         currentPlayer = players.get(currentPlayerTracker);
         currentPlayer.rollInit();
+        maxRolls = game.getRollsPerRound()-1;
+        currentRolls = 1;
 
         //creates our roll button which rolls the selected dice
         roll = new Button("Roll");
@@ -89,7 +101,9 @@ public class GameScreen {
             @Override
             public void handle(ActionEvent event) {
                 if (currentPlayer != null) {
-                    playerRoll();
+                    if(!currentPlayer.isRoundOver()) {
+                        playerRoll();
+                    }
                 }
             }
         });
@@ -135,18 +149,25 @@ public class GameScreen {
         root.getChildren().addAll(playerText, playerDiceButtons, roll, factionBonus, scoreVBoxContainer, imageView);
         root.getStylesheets().add("title.css");
         root.setId("pane2");
+
+        //start our game loop
+        generateScorecard();
+        gameDisplayController();
+
         primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
 
-        //start our game loop
-        gameDisplayController();
+
     }
 
     /**
      * initailizes the views for a player
      */
     private void gameDisplayController() {
+        //clear the controller for our listView of scoreline buttons
         scoreListButtons.clear();
+        //set the faction bonus instructions to the current faction
+        factionBonus.setText(currentPlayer.getFaction().specialInstructions());
         int i = 0;
 
         //display currentPlayer
@@ -244,9 +265,9 @@ public class GameScreen {
 
         //clears the toggles on our toggle buttons
         resetButtons();
-        gameDisplayController();
         //roll the selected dice and generate new buttons to display the score
         currentPlayer.rollOnce(choice);
+        gameDisplayController();
         generateScorecard();
     }
 
@@ -257,9 +278,12 @@ public class GameScreen {
     private void resetButtons() {
         for (Node node : playerDiceButtons.getChildren()) {
             ToggleButton playerButton = (ToggleButton) node;
+            //if a button is selected set it to be unselected
             if (playerButton.isSelected()) {
                 playerButton.setSelected(false);
             }
+
+            //clear the current styling of the buttons
             playerButton.getStyleClass().clear();
             playerButton.setText(null);
         }
@@ -272,12 +296,12 @@ public class GameScreen {
     private void generateScorecard() {
         //score labels are the keys to access the proper lines in our score object
         String[] scoreLabels = {"1", "2", "3", "4", "5", "6", "7", "3 of a Kind", "4 of a Kind", "Full House", "The North",
-                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons"};
+                "The South", "Easteros", "The Dead", "The Crown", "The Others", "Dragons", "Yahtzee"};
 
         //iterate through each line and add a message to the button representing it how many points that line is worth
         //set id to be the string representing the line the user selected
-        for (int i = 0; i < scoreLabels.length - 1; i++) {
-            if (currentPlayer.isScoreSet((scoreLabels[i]))) {
+        for (int i = 0; i < scoreLabels.length; i++) {
+            if (!currentPlayer.isScoreSet((scoreLabels[i]))) {
                 Button button = new Button(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 button.setOnAction(new ScoreActionListener());
                 button.setId(scoreLabels[i]);
@@ -290,40 +314,50 @@ public class GameScreen {
      * custom listener to handle our scoreline events
      */
     private class ScoreActionListener implements EventHandler<ActionEvent> {
+        /**
+         * handle
+         * @params  event
+         *
+         * */
         public void handle(ActionEvent event) {
+            //grab the button that was pressed from the event object
             Button pressedLine = (Button) event.getSource();
-            if (currentPlayer.isScoreSet(pressedLine.getId())) {
+
+            //make sure the player's turn is over
+            if(!currentPlayer.isPlayerTurnsOver()) {
+                boolean[] choice = new boolean[game.getDieNum()];
+                for (int i = 0; i < choice.length - 1; i++) {
+                    choice[i] = true;
+                }
+                currentPlayer.rollOnce(choice);
+            }
+
+            //check to see if the score has already been set
+            if (!currentPlayer.isScoreSet(pressedLine.getId())) {
                 // set the player's score by inputting the string key of what the user chose
                 currentPlayer.setScore(pressedLine.getId());
                 currentPlayerTracker++; //increment to next player
-
-                //reset our toggle buttons
-                resetButtons();
 
                 //all players played a round increment game round
                 if (currentPlayerTracker > maxPlayers) {
                     //start of new round
                     currentPlayerTracker = 0;
-                    System.out.println("Game round: " + game.getCurrentRound());
-                    System.out.println("Max game round: " + game.getMaxRounds());
                     game.incrementRound();
                     if (!game.isGameOver()) {
-                        // close globals
-                        game.end();
                         WinnerScreen winnerScreen = new WinnerScreen();
                         winnerScreen.start(primaryStage, players);
                     }
                 }
 
+                //reset the toggle buttons
+                resetButtons();
                 currentPlayer = players.get(currentPlayerTracker);
                 currentPlayer.rollInit();
-                generateScorecard();
-                gameDisplayController();
-
-                //TODO: delete this when done testing winner screen
-                WinnerScreen winnerScreen = new WinnerScreen();
-                winnerScreen.start(primaryStage, players);
             }
+
+            //create the new player's ui
+            generateScorecard();
+            gameDisplayController();
         }
     }
 }

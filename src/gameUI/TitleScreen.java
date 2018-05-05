@@ -10,6 +10,7 @@
  */
 package gameUI;
 
+import gameRunner.Game;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,12 +25,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Syntax.Java;
+import java.io.IOException;
 
 
 public class TitleScreen extends Application {
+    public static Game game = new Game();
+
     /**
      * Main function to run the title class
      * @param  args
@@ -45,6 +47,7 @@ public class TitleScreen extends Application {
     public void start(Stage primaryStage) {
         //set window title
         primaryStage.setTitle("Game Of Yahtzee");
+        game.start();
 
         //root container
         StackPane root = new StackPane();
@@ -96,10 +99,6 @@ public class TitleScreen extends Application {
         button1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
-
-                //System.out.println("Hi");
-
                 PlayersScreen playersScreen = new PlayersScreen();
                 playersScreen.start(primaryStage);
             }
@@ -115,14 +114,7 @@ public class TitleScreen extends Application {
             @Override
             public void handle(ActionEvent event) {
                 InstructionScreen instructionScreen = new InstructionScreen();
-                //try {
                 instructionScreen.start(primaryStage);
-                //} catch (IOException e) {
-                //    e.printStackTrace();
-                //}
-                //FactionScreen factionScreen = new FactionScreen();
-                //factionScreen.start(primaryStage);
-
             }
         });
 

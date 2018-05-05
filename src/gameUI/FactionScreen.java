@@ -2,12 +2,10 @@ package gameUI;
 
 import factions.Faction;
 import gameRunner.Player;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -19,11 +17,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
-import static gameRunner.Main.game;
+import static gameUI.TitleScreen.game;
 
+/**
+ * Class to attach and simulate faction picking for player's
+ * Once factions are picked game loop is started
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Nicole Howard
+ *
+ * @version v1 5/4/18
+ */
 public class FactionScreen {
 
     private final Button stark = new Button();
@@ -42,6 +50,7 @@ public class FactionScreen {
 
     public void start(Stage primaryStage, ArrayList<String> playerNames) {
         primaryStage.setTitle("Game Of Yahtzee - Choose Faction");
+
 
         stage = primaryStage;
         amountOfPlayers = playerNames.size();
@@ -69,7 +78,6 @@ public class FactionScreen {
         root.add(imageView, 0, 1);
 
         //Text area to state whose turn it is to pick their faction
-        //TODO: get current player's name and add it to text
         playerName = new Text(playerNames.get(0));
         playerName.setFill(Color.GRAY);
         playerName.setFont(new Font(30));
@@ -147,7 +155,7 @@ public class FactionScreen {
 
     //TODO: change the which player's choice it is
     public class ButtonHandler implements EventHandler {
-        DropShadow dsWhite;
+        private DropShadow dsWhite;
         public ButtonHandler() {
             dsWhite = new DropShadow();
             dsWhite.setOffsetY(2.5f);
@@ -158,7 +166,6 @@ public class FactionScreen {
         public void handle(Event event) {
             Button button = (Button) event.getSource();
             String faction = button.getId();
-            System.out.println(faction);
 
             /*
 
@@ -204,17 +211,12 @@ public class FactionScreen {
                     break;
             }
             currentPlayer++;
-            System.out.println("Current player " + currentPlayer);
-            System.out.println("Max players " + amountOfPlayers);
-            System.out.println("Size of names array " + names.size());
 
             if(currentPlayer >= amountOfPlayers){
-                game.start();
                 ArrayList<Player> players = new ArrayList<>();
                 for (int i = 0; i < names.size(); i++) {
                     players.add(new Player(game.getDieSides(), game.getDieNum(), game.getRollsPerRound(), names.get(i), factions.get(i)));
                 }
-                game.end();
                 GameScreen gameScreen = new GameScreen();
                 gameScreen.start(stage, players);
             }

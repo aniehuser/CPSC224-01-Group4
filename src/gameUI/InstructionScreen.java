@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-//TODO: Format the dice in instructions string
 public class InstructionScreen {
     /**
      * start a screen reflecting our instructions screen
@@ -25,6 +24,14 @@ public class InstructionScreen {
      * @return none
      */
     public void start(final Stage primaryStage)  {
+
+        String dice = String.format("%-20s %s" , "Nights Watch Ranger" , "-- Jon Snow, 5% chance.\n" );
+        String dice1 = String.format("%-22s %s" , "Kingsguard Knight"  ,   "-- Jaime Lannister, 4% chance.\n");
+        String dice2 = String.format("%-24s %s" , "Faceless Man" , "-- Arya Stark, 3% chance.\n" );
+        String dice3 = String.format("%-26s %s" , "Undead" , "-- Undead Dragon, 2% chance.\n");
+        String dice4 = String.format("%-28s %s" , "Wildfire" , "-- Cersei, 1% chance.\n" );
+        String dice5 = String.format("%-24s %s" , "White Walker" , "-- The Night King, .75% chance.\n" );
+        String dice6 = String.format("%-26s %s" , "Drogon" , "-- Drogon, .5% chance.\n" );
 
         final String instructions = "How To Win:\n" + "Players pick a faction to " +
                 "belong to and fight the others by rolling the dice to become the ruling faction\n" +
@@ -34,13 +41,7 @@ public class InstructionScreen {
                  "Each side of the dice has a representation of a warrior or \n" +
                 "character from Game of Thrones.  In each round, you may choose \nto reroll " +
                 "any number of your dice two times unless otherwise specified by a special rule.\n" + "\nThe Dice:\n" +
-                "Nights Watch Ranger -- Jon Snow         -- 5% chance \n" +
-                "Kingsguard Knight     -- Jaime Lannister -- 4% \n" +
-                "Faceless Man            -- Arya Stark       -- 3% \n" +
-                "Undead                -- Undead Dragon   -- 2% \n" +
-                "Wildfire            -- Cersei          -- 1%\n" +
-                "White Walker        -- The Night King  -- .75%\n" +
-                "Dragon              -- Drogon          -- .5%";
+                dice + dice1 +  dice2 + dice3 + dice4 + dice5 + dice6;
 
         final String scoring = "Scoring:\nEach turn you get pick one score to fill out on scorecard.\n" +
                 "\nUpper Scoring:\n" + "Each dice representation has a chance of getting a rare of that dice.\n" +
@@ -96,7 +97,12 @@ public class InstructionScreen {
         root.getStylesheets().add("title.css");
         primaryStage.show();
 
-        //Next-Back button changes the text from instructions to scoring
+        /**
+         * Anonymous inner class will switch the instruction
+         * based on the button pressed next or back
+         * @return nothing
+         * @param EventHandler class that overrides handle()
+         */
         final Button nextButton = (Button) scene.lookup("#nextButton");
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -114,8 +120,12 @@ public class InstructionScreen {
 
         //play button goes back to the title screen
         Button playButton = (Button) scene.lookup("#playButton");
-        //playButton.getStyleClass().add("rich-blue");
         playButton.setText("Title Screen");
+        /**
+         * Anonymous inner class will go back to the title screen
+         * @return nothing
+         * @param EventHandler class that overrides handle()
+         */
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
