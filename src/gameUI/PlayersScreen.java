@@ -17,9 +17,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
-//TODO: button styling (Nicole)
-
-//TODO: handle input for names, go to pick faction screen (Carl)
+/**
+ * Class to attach backend name picking logic to a ui
+ * it will then start the faction picking portion and player's name with the input it has recieved
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1 5/4/18
+ */
 
 public class PlayersScreen {
 
@@ -32,6 +40,12 @@ public class PlayersScreen {
     private StackPane root = new StackPane();
     private DropShadow ds = new DropShadow();
 
+    /**
+     * Initializes the screen in which they enter the number of players
+     * and enter the names of the players
+     * @return nothing
+     * @param primaryStage the stage where we set our scene and pane
+     */
     public void start(Stage primaryStage){
         primaryStage.setTitle("Game Of Yahtzee - Choose Players");
 
@@ -104,6 +118,12 @@ public class PlayersScreen {
             this.primaryStage = primaryStage;
         }
 
+        /**
+         * Handles the action of a button that was pressed, this
+         * changes the pane to enter the names of each play
+         * @return nothing
+         * @param event, the event the button press was located
+         */
         @Override
         public void handle(ActionEvent event) {
 
@@ -130,6 +150,9 @@ public class PlayersScreen {
             enterButton.setMinHeight(50.0);
             enterButton.setEffect(ds);
 
+
+            //Action listener for the enter button, this takes you
+            //to the screen where players will choose their faction
             enterButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -141,10 +164,7 @@ public class PlayersScreen {
                     factionScreen.start(primaryStage,names);
                 }
             });
-
-
             root.getChildren().add(enterButton);
-
         }
     }
 }

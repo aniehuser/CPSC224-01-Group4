@@ -1,6 +1,5 @@
 package gameUI;
 
-import factions.BaseFaction;
 import factions.Faction;
 import gameRunner.Player;
 import javafx.event.ActionEvent;
@@ -18,16 +17,28 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 import static gameUI.TitleScreen.game;
 
+/**
+ * Class to control ui options after a game has been played
+ *
+ * CPSC 224-01, Spring 2018
+ * Programming Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1 5/4/18
+ */
 public class WinnerScreen {
 
-    private Faction wf;
-    private HBox hbox;
-    private StackPane root;
+    private Faction wf; //faction object for the winner in order to set the correct background
+    private HBox hbox; //hbox container for the text's strings of the player's score lines
+    private StackPane root; //root stackpane that contains all smaller ui elements
 
+    /** start
+     * @params Stage, players
+     * */
     public void start(Stage primaryStage, ArrayList<Player> players) {
         primaryStage.setTitle("Game of Yahtzee - Game Over");
         root = new StackPane();
@@ -43,7 +54,7 @@ public class WinnerScreen {
 
         //get the winners faction and set the background based on winning faction
         wf = winner.getFaction().getFactionType();
-        System.out.println("Winning Faction:" + wf);
+
         if (wf == Faction.STARKS) {
             root.setId("pane3");
         } else if (wf == Faction.LANNISTERS) {
@@ -60,10 +71,12 @@ public class WinnerScreen {
             root.setId("pane5");
         }
 
-        Button exitProgram = new Button("Quit");
-        StackPane.setAlignment(exitProgram, Pos.BOTTOM_RIGHT);
-        exitProgram.getStyleClass().add("rich-blue");
-        exitProgram.setOnAction(new EventHandler<ActionEvent>() {
+
+        //create a button to exit the game when pressed by the user
+        Button quit = new Button("Quit");
+        StackPane.setAlignment(quit, Pos.BOTTOM_RIGHT);
+        quit.getStyleClass().add("rich-blue");
+        quit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 game.end();
@@ -71,18 +84,24 @@ public class WinnerScreen {
             }
         });
 
-        Button viewScores = new Button("View Scores");
-        StackPane.setAlignment(viewScores, Pos.BOTTOM_RIGHT);
-        viewScores.setTranslateX(-120);
-        viewScores.getStyleClass().add("rich-blue");
-        viewScores.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                viewScores.setVisible(false);
-                displayScores(root, players);
-            }
-        });
+        //add text's containing a player's score lines to a hbox container
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.setTranslateY(40);
+        hbox.setSpacing(20);
 
+        for (Player player :players) {
+            Text text = new Text(player.getName() + "\n" +player.getScorer().toString());
+            if (wf == Faction.GREYJOYS) {
+                text.setFill(Color.FORESTGREEN);
+            } else {
+                text.setFill(Color.WHITESMOKE);
+            }
+            text.setStyle("-fx-font-size: 16");
+            text.setFont(Font.font("serif"));
+            hbox.getChildren().add(text);
+        }
+
+        //create a button that will return the player to the title screen
         Button returnToTitleButton = new Button("Return to Title Screen");
         StackPane.setAlignment(returnToTitleButton, Pos.BOTTOM_LEFT);
         returnToTitleButton.getStyleClass().add("rich-blue");
@@ -94,6 +113,7 @@ public class WinnerScreen {
                 titleScreen.start(primaryStage);
             }
         });
+
         Text winnerText = new Text("Congrats " + winner.getName() +  "! " + wf.toString() + " takes the throne!");
         if (wf == Faction.GREYJOYS || wf == Faction.CHILDREN_OF_THE_FOREST) {
             winnerText.setFill(Color.BLACK);
@@ -107,13 +127,6 @@ public class WinnerScreen {
         VBox vbox = new VBox();
         int i = 1;
         for (Player player :players) {
-
-            //vbox.getChildren().add(new Text(player.toString()));
-            //Text text = new Text(player.getScorer().toString());
-            //Text text = new Text(i + ". " +player.getName() + " scored " + (Integer.toString(player.getScorer().totalAllDice()) + " points."));
-
-//            vbox.getChildren().add(new Text(player.toString()));
-//            Text text = new Text(player.getScorer().toString());
             Text text = new Text(i + ". " +player.getName() + " scored " + (player.getPlayerScoreByKey("Grand Total") + " points."));
             if (wf == Faction.GREYJOYS || wf == Faction.CHILDREN_OF_THE_FOREST) {
                 text.setFill(Color.BLACK);
@@ -128,30 +141,9 @@ public class WinnerScreen {
         vbox.setAlignment(Pos.TOP_LEFT);
         vbox.setTranslateY(55);
 
-        //StackPane.setAlignment(vbox, Pos.CENTER_LEFT);
-
         root.setPadding(new Insets(25, 25, 25, 25));
-        root.getChildren().addAll(returnToTitleButton, exitProgram, vbox, winnerText, viewScores);
+        root.getChildren().addAll(vbox, hbox, winnerText, returnToTitleButton, quit);
         primaryStage.setScene(new Scene(root, 1150, 700, Color.BLACK));
         primaryStage.show();
     }
-
-    private void displayScores(StackPane root, ArrayList<Player> players) {
-        hbox.setAlignment(Pos.CENTER_LEFT);
-        hbox.setTranslateY(40);
-        hbox.setSpacing(20);
-        for (Player player :players) {
-            Text text = new Text(player.getName() + "\n" +player.getScorer().toString());
-            if (wf == Faction.GREYJOYS) {
-                text.setFill(Color.FORESTGREEN);
-            } else {
-                text.setFill(Color.WHITESMOKE);
-            }
-            text.setStyle("-fx-font-size: 16");
-            text.setFont(Font.font("serif"));
-            hbox.getChildren().add(text);
-        }
-        root.getChildren().add(hbox);
-    }
-
  }
