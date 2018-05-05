@@ -12,7 +12,7 @@ class HandTest {
     void incrementMaxRolls() {
         Hand hand = new Hand(5, 5, 3);
         //we can roll 4 times if the max roll is 4
-        hand.incrementMaxRolls();
+        hand.setMaxRolls(4);
         hand.shuffleAll();
         hand.shuffleAll();
         hand.shuffleAll();

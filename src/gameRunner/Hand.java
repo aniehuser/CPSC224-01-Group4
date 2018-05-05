@@ -74,8 +74,8 @@ public class Hand implements Cloneable {
 	/**
 	 * CARL DO NOT USE THIS METHOD
 	 */
-	public void incrementMaxRolls(){
-		maxRolls++;
+	public void setMaxRolls(int n){
+		maxRolls = n;
 	}
 	
 	/**

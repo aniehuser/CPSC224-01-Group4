@@ -71,10 +71,15 @@ public class Player {
 	/**
 	 * CARL DO NOT USE THIS METHOD
 	 */
-	public void incrementMaxRolls(){
-		maxRolls++;
-		hand.incrementMaxRolls();
+	public void setMaxRolls(int n){
+		maxRolls = n;
+		hand.setMaxRolls(n);
 	}
+
+	public void setMaxRounds(int n){
+		maxRounds = n;
+	}
+
 	/**
 	 * CARL DO NOT USE THIS METHOD
 	 */
@@ -84,6 +89,10 @@ public class Player {
 	
 	public BaseFaction getFaction(){
 		return faction;
+	}
+
+	public int getRounds(){
+		return rounds;
 	}
 	
 	public void rollInit(){
@@ -156,7 +165,7 @@ public class Player {
 			System.out.println("Score Error: Cannot score until round is over");
 			return;
 		}
-		if(!isScoreSet(key)){
+		if(isScoreSet(key)){
 			scorecard.put(key, bonusPoints + scorecard.get(key) + scorer.getScore(key));
 			System.out.println("Score Error: Score has already been set");
 		} else{
@@ -168,7 +177,7 @@ public class Player {
 	}
 	public boolean isScoreSet(String key){
 		StringContainer inStr = new StringContainer(key);
-		return InputHandler.scoreToKeep(inStr, scorecard);
+		return !InputHandler.scoreToKeep(inStr, scorecard);
 	}
 
 	private boolean isAllTrue(boolean[] array){

@@ -1,0 +1,251 @@
+/**
+ * css file used for styling in TitleScreen
+ *
+ * CPSC 224-01, Spring 2018
+ * Project
+ *
+ * @author Carl Lundin
+ *
+ * @version v1.0
+ */
+
+.rich-blue{
+    -fx-background-color:
+        #000000,
+        linear-gradient(#7ebcea, #2f4b8f),
+        linear-gradient(#426ab7, #263e75),
+        linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 30 30 30 30;
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+}
+.button1{
+    -fx-text-fill: #006464;
+    -fx-background-color: #DFB951;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5;
+}
+
+.anchor {
+    -fx-background-image:url("throne_background.jpg");
+}
+
+.toggle-button1 {
+  -fx-graphic: url("res/nights_watch_ranger.png");
+  -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 30, 0.0 , 0 , 0);
+}
+.toggle-button1:selected {
+  -fx-graphic: url("res/nights_watch_ranger.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button1s {
+  -fx-graphic: url("res/jon_snow.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button1s:selected {
+  -fx-graphic: url("res/jon_snow.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button2 {
+  -fx-graphic: url("res/knightsguard_knight.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button2:selected {
+  -fx-graphic: url("res/knightsguard_knight.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button2s {
+  -fx-graphic: url("res/jamie_lannister.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button2s:selected {
+  -fx-graphic: url("res/jamie_lannister.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+
+.toggle-button3 {
+  -fx-graphic: url("res/face_less_men.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button3:selected {
+  -fx-graphic: url("res/face_less_men.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button3s {
+  -fx-graphic: url("res/arya_stark.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+
+}
+.toggle-button3s:selected {
+  -fx-graphic: url("res/arya_stark.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button4 {
+  -fx-graphic: url("res/undead.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button4:selected {
+  -fx-graphic: url("res/undead.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button4s {
+  -fx-graphic: url("res/undead_dragon.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button4s:selected {
+  -fx-graphic: url("res/undead_dragon.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button5 {
+  -fx-graphic: url("res/wildfire.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button5:selected {
+  -fx-graphic: url("res/wildfire.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button5s {
+  -fx-graphic: url("res/cersei.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button5s:selected {
+  -fx-graphic: url("res/cersei.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button6 {
+  -fx-graphic: url("res/white-walkers-5.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button6:selected {
+  -fx-graphic: url("res/white-walkers-5.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button6s {
+  -fx-graphic: url("res/knight_king.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button6s:selected {
+  -fx-graphic: url("res/knight_king.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button7 {
+  -fx-graphic: url("res/dragon.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+.toggle-button7:selected {
+  -fx-graphic: url("res/dragon.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+.toggle-button7s {
+  -fx-graphic: url("res/drogon.png");
+  -fx-effect: dropshadow(three-pass-box, rgba(1,1,1,0.8), 30, 0, 0, 0);
+}
+.toggle-button7s:selected {
+  -fx-graphic: url("res/drogon.png");
+  -fx-border-color:lime;
+  -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 30, 0, 0, 0);
+}
+
+#pane0 {
+    -fx-background: black;
+    -fx-background-size: cover;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#pane{
+    -fx-background-image: url("res/got_background_dark.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#pane2{
+    -fx-background-image: url("res/got_background2.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#pane3{
+    -fx-background-image: url("res/stark_wallpaper.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#pane4{
+    -fx-background-image: url("res/lannister_wallpaper2.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+
+#pane5{
+    -fx-background-image: url("res/targaryen.wallpaper.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+#pane6{
+    -fx-background-image: url("res/white_walker_background.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+#pane7{
+    -fx-background-image: url("res/greyjoy_wallpaper2.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+#pane8{
+    -fx-background-image: url("res/children_of_forest_wallpaper.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+#pane9{
+    -fx-background-image: url("res/baratheon_wallpaper.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
