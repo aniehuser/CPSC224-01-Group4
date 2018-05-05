@@ -301,7 +301,7 @@ public class GameScreen {
         //iterate through each line and add a message to the button representing it how many points that line is worth
         //set id to be the string representing the line the user selected
         for (int i = 0; i < scoreLabels.length; i++) {
-            if (currentPlayer.isScoreSet((scoreLabels[i]))) {
+            if (!currentPlayer.isScoreSet((scoreLabels[i]))) {
                 Button button = new Button(currentPlayer.getScorer().generateScoreMessage(scoreLabels[i]));
                 button.setOnAction(new ScoreActionListener());
                 button.setId(scoreLabels[i]);
@@ -333,7 +333,7 @@ public class GameScreen {
             }
 
             //check to see if the score has already been set
-            if (currentPlayer.isScoreSet(pressedLine.getId())) {
+            if (!currentPlayer.isScoreSet(pressedLine.getId())) {
                 // set the player's score by inputting the string key of what the user chose
                 currentPlayer.setScore(pressedLine.getId());
                 currentPlayerTracker++; //increment to next player
